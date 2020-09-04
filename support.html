@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Support</title>
+    <style>
+    *{margin: auto; font-family: monospace; }
+    header{position:fixed;width:100%;}
+    main{position:relative;padding:50px;box-sizing:border-box;}
+    section{margin-bottom:25px;}
+    article{box-sizing:border-box;padding:20px;border-bottom:dashed 1px black;}
+    article:last-child{border-bottom:initial;}
+    tr.na{text-decoration:line-through;}
+    tr.na::after{content:"Not Supported";position:absolute;color:red;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>App: <span>DELTACO OFFICE Guide</span></h1>
+        <hr>
+    </header>
+
+    <main>
+        <section>
+        <table>
+            <tr>
+                <th>Browser<sup>1</sup> (Engine)</th>
+                <th>Support</th>
+            </tr>
+            <tr>
+                <td>Chromium (Blink)</td>
+                <td><meter value="100" low="50" optimum="90" max="100"></meter> 100%</td>
+            </tr>
+            <tr>
+                <td>MacOS Safari (WebKit)</td>
+                <td><meter value="95" low="50" optimum="90" max="100"></meter> 95%</td>
+            </tr>
+            <tr>
+                <td>Firefox (Gecko)</td>
+                <td><meter value="80" low="50" optimum="90" max="100"></meter> 80%</td>
+            </tr>
+            <tr>
+                <td>Edge (EdgeHTML)</td>
+                <td><meter value="75" low="50" optimum="90" max="100"></meter> 75%</td>
+            </tr>
+            <tr class="na">
+                <td>IE (Trident)</td>
+                <td><meter value="32" low="50" optimum="90" max="100"></meter> 32%</td>
+            </tr>
+            <tr>
+                <th>Mobile Browser<sup>1</sup> (Engine)</th>
+                <th>Support</th>
+            </tr>
+            <tr>
+                <td>Chromium (Blink)</td>
+                <td><meter value="100" max="100"></meter> 100%</td>
+            </tr>
+            <tr>
+                <td>iOS Safari (WebKit)</td>
+                <td><meter value="90" max="100"></meter> 90%</td>
+            </tr>
+        </table>
+        </section>
+        <p><sup>1</sup> Latest stable build</p>
+    </main>
+</body>
+</html>
