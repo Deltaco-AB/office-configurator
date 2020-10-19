@@ -149,7 +149,7 @@ class DeltacoOfficeGuide {
     }
 
     // Configurator version
-    static version() { return "1.1.3"; }
+    static version() { return "1.2.1"; }
 
     // Translate office guide product numbers to their hyphen-equivalent
     static translate(product,all) {

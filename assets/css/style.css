@@ -1,17 +1,5 @@
 .hidden { display: none !important; }
 
-#appHeader { 
-    
-    margin-bottom: 20px;
-
-    display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-
-}
-#appHeader * { color: black; margin: 0; }
-#appHeader p { max-width: 50%; text-align: right; }
-
 #officeGuideLoading { 
     
     text-align: center;
@@ -24,7 +12,6 @@
 
 /*------------------------------------------------------------------------------*/
 
-#appHeader,
 #officeGuide,
 #officeGuideLoading,
 #windowContainer {
@@ -33,7 +20,6 @@
 
 }
 
-#appHeader,
 #officeGuide {
 
     position: relative;
@@ -1195,8 +1181,6 @@
 
     #officeGuide { flex-wrap: wrap; }
 
-    #appHeader { flex-wrap: wrap; text-align: center; }
-    #appHeader p { text-align: left; max-width: 100%; }
     #officeGuide #interactive { 
         max-width: calc(100vw - 80px); 
         height: 620px;
