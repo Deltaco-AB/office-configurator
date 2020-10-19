@@ -1,5 +1,3 @@
-// DELTACO OFFICE GUIDE - Victor Westerlund - www.victorwesterlund.com
-
 /*
 *   Stage: Groups of products 1-4
 *   Pages: Smaller groups of four products within a stage
@@ -17,7 +15,8 @@ let configuration = {
 
 // Object of product elements and properties
 const products = {
-    /* Get preview and viewfinder element pairs
+    /* 
+    *  Get preview and viewfinder element pairs
     *  HTMLCollection(1) = Product is not present in viewfinder on this stage
     *  HTMLCollection(2) = Product is listed somewhere in the viewfinder
     *  ! Do console.log(products)
@@ -131,7 +130,7 @@ class DeltacoOfficeGuide {
         // Values assigned to this object are reset on page load (session)
         this.enviroment = {
             initialized: false, // True when class is initialized
-            loggedIn: false, // Becomes true if user is logged in
+            loggedIn: true, // Becomes true if user is logged in
             // True when user has changed page
             // This tracks the "More products" hoverpop
             prompted: {
@@ -150,7 +149,7 @@ class DeltacoOfficeGuide {
     }
 
     // Configurator version
-    static version() { return "1.1.2"; }
+    static version() { return "1.1.3"; }
 
     // Translate office guide product numbers to their hyphen-equivalent
     static translate(product,all) {
@@ -522,7 +521,8 @@ class DeltacoOfficeGuide {
 
         // Test if user is logged in
         // If we can't find the "log in" element, user must be logged in
-        if(!document.body.contains(document.getElementById("ctl00_WelcomeBar1_IdWelcome_ExplicitLogin"))) { this.enviroment.loggedIn = true; }
+        const loggedIn = new URLSearchParams(window.location.search);
+        if(loggedIn.has("au")) { this.enviroment.loggedIn = true; }
 
         // Set default stage
         this.setStage();
@@ -543,7 +543,7 @@ class DeltacoOfficeGuide {
 
         // Nest the innerNode and append to workspace
         node.appendChild(innerNode);
-        document.getElementById("s4-workspace").appendChild(node);
+        document.getElementsByTagName("body")[0].appendChild(node);
 
         // Make our new elements accesible by this class
         this.enviroment.popup.container = node;
@@ -574,11 +574,6 @@ function simulateAddToExpressCart() {
 
     if(configuration.products.length < 1) { return false; }
 
-    // Relevant elements
-    const wrapper = $(".msax-expresscart-view"),
-          button = $(".msax-CommandAddToCart")[0],
-          itemsInput = document.querySelectorAll(".msax-expresscart-items")[0];
-
     // Populate <textarea> with item numbers and quantity
 	for (let i = 0; i < configuration.products.length; i++) {
 
@@ -608,21 +603,17 @@ function simulateAddToExpressCart() {
         // Add multi-pack dependencies if they exist
         if(multipack.length > 1) {
             multipack.forEach(item => {
-                itemsInput.value += `${item}#${quantity}\n`;
+                parent.postMessage(["add",[item,quantity]], "*");
             });
         }
         
         // [itemnumber]#[quantity]\n
-		itemsInput.value += `${DeltacoOfficeGuide.translate(product)}#${quantity}\n`;
+        parent.postMessage(["add",[DeltacoOfficeGuide.translate(product),quantity]], "*");
     }
-
-	// Call the SharePoint function for our .msax-expresscart-view family
-    Microsoft.Dynamics.Retail.SharePoint.Web.UI.ViewModel.AddToExpressCartViewModel(msaxServices, wrapper);
 
     guide.reset();
 
-    // Trigger the nested jQuery click() function, binded when calling AddToExpressCartViewModel
-    button.click();
+    parent.postMessage(["submit"], "*");
 
 }
 

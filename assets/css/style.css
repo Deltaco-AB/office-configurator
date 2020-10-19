@@ -1,6 +1,4 @@
-/* DELTACO OFFICE GUIDE - Victor Westerlund - www.victorwesterlund.com */
-
-.hidden { display: none; }
+.hidden { display: none !important; }
 
 #appHeader { 
     
@@ -26,11 +24,21 @@
 
 /*------------------------------------------------------------------------------*/
 
+#appHeader,
+#officeGuide,
+#officeGuideLoading,
+#windowContainer {
+
+    font-family: "Droid Sans","Arial Regular", sans-serif;
+
+}
+
+#appHeader,
 #officeGuide {
 
     position: relative;
-    font-family: "Arial Regular", sans-serif;
-    max-width: 100%;
+    max-width: 1200px;
+    width: 100%;
     overflow: hidden;
 
     display: flex;
@@ -81,7 +89,7 @@
     position: absolute;
     width: 100%;
     height: 402px;
-    background-image: url("https://cloud.deltaco.eu/app/deltaco-office/img/sprites_872.png");
+    background-image: url("../img/sprites_872.png");
     background-size: cover;
     opacity: 0;
 
@@ -241,7 +249,7 @@
 
     width: auto;
     font-size: 17px;
-    margin-top: 12px;
+    margin-top: 15px;
     opacity: 0;
     z-index: 2;
     pointer-events: none;
@@ -470,7 +478,7 @@
     pointer-events: none;
     width: 128px;
     height: 128px;
-    background: url("https://cloud.deltaco.eu/app/deltaco-office/img/sprites_128.png");
+    background: url("../img/sprites_128.png");
     background-size: cover;
 
 }
@@ -857,7 +865,7 @@
 #windowContainer .item .thumb {
 
     position: relative;
-    background: url("https://cloud.deltaco.eu/app/deltaco-office/img/sprites_128.png");
+    background: url("../img/sprites_128.png");
     background-size: cover;
     width: 64px;
     height: 64px;
@@ -1169,10 +1177,8 @@
 
 @media screen and (max-width: 1150px) {
 
-    #officeGuide { flex-wrap: wrap; justify-content: center; }
-
     #officeGuide .block:first-child { justify-content: center; }
-    #officeGuide #preview { transform: scale(.7); }
+    #officeGuide #interactive { transform: scale(.85); }
 
     #officeGuide .block {
 
@@ -1185,11 +1191,21 @@
 
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 1090px) {
+
+    #officeGuide { flex-wrap: wrap; }
 
     #appHeader { flex-wrap: wrap; text-align: center; }
     #appHeader p { text-align: left; max-width: 100%; }
-    #officeGuide #interactive { max-width: calc(100vw - 80px); height: 620px; }
+    #officeGuide #interactive { 
+        max-width: calc(100vw - 80px); 
+        height: 620px;
+        transform: scale(1);
+    }
+
+    #officeGuide #preview {
+        transform: scale(.8);
+    }
 
     /*------------------------------------------------------------------------------*/
 
