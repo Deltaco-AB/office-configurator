@@ -1,0 +1,175 @@
+{
+	"categories": {
+		"1": {
+			"name": "Desktops",
+			"startActive": true
+		},
+		"2": {
+			"name": "Ergonomics",
+			"startActive": true
+		},
+		"3": {
+			"name": "Accessories",
+			"startActive": true
+		},
+		"4": {
+			"name": "Accessories",
+			"startActive": false
+		}
+	},
+	"products": {
+		"DELO-0201": {
+			"category": 3,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0100": {
+			"category": 1,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELC-0100": {
+			"category": 3,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0150": {
+			"category": 3,
+			"incompatible": [
+				"DELO-0153"
+			],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0151": {
+			"category": 0,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0152": {
+			"category": 3,
+			"incompatible": [
+				"DELO-0153"
+			],
+			"multipack": [
+				"DELO-0151"
+			],
+			"triggers": {}
+		},
+		"DELO-0153": {
+			"category": 3,
+			"incompatible": [
+				"DELO-0150",
+				"DELO-0152"
+			],
+			"multipack": [
+				"DELO-0151"
+			],
+			"triggers": {}
+		},
+		"DELO-0155": {
+			"category": 4,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0154": {
+			"category": 4,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0156": {
+			"category": 4,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0157": {
+			"category": 4,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0158": {
+			"category": 4,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0200": {
+			"category": 3,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0202": {
+			"category": 3,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0301": {
+			"category": 2,
+			"incompatible": [
+				"DELO-0300",
+				"DELO-0302"
+			],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0203": {
+			"category": 3,
+			"incompatible": [
+				"DELO-0204"
+			],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0204": {
+			"category": 3,
+			"incompatible": [
+				"DELO-0203"
+			],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0300": {
+			"category": 2,
+			"incompatible": [
+				"DELO-0301",
+				"DELO-0302"
+			],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0302": {
+			"category": 2,
+			"incompatible": [
+				"DELO-0303",
+				"DELO-0301",
+				"DELO-0300"
+			],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0303": {
+			"category": 2,
+			"incompatible": [
+				"DELO-0302"
+			],
+			"multipack": [],
+			"triggers": {}
+		},
+		"DELO-0402": {
+			"category": 3,
+			"incompatible": [],
+			"multipack": [],
+			"triggers": {}
+		}
+	}
+}

@@ -1,0 +1,213 @@
+:root {
+    --color: #5A5A5A;
+    --color-accent: #D5AA7B;
+    --text-color: white;
+
+    /* Sprite dimensions */
+    --sprite-viewfinder-width: 872px;
+    --sprite-viewfinder-height: 581px;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Positioning */
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center.x {
+    align-items: unset;
+}
+
+.center.y {
+    justify-content: unset;
+}
+
+/* Content */
+
+main {
+    margin: auto;
+    width: 100%;
+    max-width: 1300px;
+    min-height: 800px;
+    max-height: 800px;
+
+    box-sizing: border-box;
+    padding: 20px;
+    background: white;
+    border-radius: 20px;
+
+    display: grid;
+    grid-template-columns: 1fr .8fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+main > div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+main > div > * {
+    position: absolute;
+}
+
+/* --- */
+
+#viewfinder {
+    width: 100%;
+    height: 100%;
+}
+
+#viewfinder .item {
+    position: absolute;
+    background: url("../img/sprites_c872.png");
+    background-size: var(--sprite-viewfinder-width);
+    width: var(--sprite-viewfinder-width);
+    height: var(--sprite-viewfinder-height);
+}
+
+/* Content > Spritesheet offsets */
+
+#viewfinder .item:nth-child(1) { background-position-y: calc(var(--sprite-viewfinder-height) * -1); }
+#viewfinder .item:nth-child(2) { background-position-y: calc(var(--sprite-viewfinder-height) * -2); }
+#viewfinder .item:nth-child(3) { background-position-y: calc(var(--sprite-viewfinder-height) * -3); }
+#viewfinder .item:nth-child(4) { background-position-y: calc(var(--sprite-viewfinder-height) * -4); }
+#viewfinder .item:nth-child(5) { background-position-y: calc(var(--sprite-viewfinder-height) * -5); }
+#viewfinder .item:nth-child(6) { background-position-y: calc(var(--sprite-viewfinder-height) * -6); }
+#viewfinder .item:nth-child(7) { background-position-y: calc(var(--sprite-viewfinder-height) * -7); }
+#viewfinder .item:nth-child(8) { background-position-y: calc(var(--sprite-viewfinder-height) * -8); }
+#viewfinder .item:nth-child(9) { background-position-y: calc(var(--sprite-viewfinder-height) * -9); }
+#viewfinder .item:nth-child(10) { background-position-y: calc(var(--sprite-viewfinder-height) * -10); }
+#viewfinder .item:nth-child(11) { background-position-y: calc(var(--sprite-viewfinder-height) * -11); }
+#viewfinder .item:nth-child(12) { background-position-y: calc(var(--sprite-viewfinder-height) * -12); }
+#viewfinder .item:nth-child(13) { background-position-y: calc(var(--sprite-viewfinder-height) * -13); }
+#viewfinder .item:nth-child(14) { background-position-y: calc(var(--sprite-viewfinder-height) * -14); }
+#viewfinder .item:nth-child(15) { background-position-y: calc(var(--sprite-viewfinder-height) * -15); }
+#viewfinder .item:nth-child(16) { background-position-y: calc(var(--sprite-viewfinder-height) * -16); }
+#viewfinder .item:nth-child(17) { background-position-y: calc(var(--sprite-viewfinder-height) * -17); }
+#viewfinder .item:nth-child(18) { background-position-y: calc(var(--sprite-viewfinder-height) * -18); }
+#viewfinder .item:nth-child(19) { background-position-y: calc(var(--sprite-viewfinder-height) * -19); }
+#viewfinder .item:nth-child(20) { background-position-y: calc(var(--sprite-viewfinder-height) * -20); }
+
+/* --- */
+
+#configure {
+    width: 100%;
+    height: 100%;
+    background: #f3f3f3;
+    border-radius: 20px;
+}
+
+/* Content > .loading */
+
+.loading {
+    border-radius: 100%;
+    z-index: 10;
+}
+
+/* Content > .selected */
+
+.selected path:nth-child(2) {
+
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -ms-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
+
+    fill: rgba(255,255,255,.8);
+    stroke: var(--color);
+    stroke-width: 3px;
+    opacity: 0;
+
+    stroke-dasharray: 10;
+    stroke-dashoffset: 0;
+
+    animation: selected 30s infinite linear;
+    animation-delay: 100ms;
+
+}
+
+.selected path:nth-child(3) {
+
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -ms-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
+
+    -webkit-transition-delay: 0ms;
+    -moz-transition-delay: 0ms;
+    -ms-transition-delay: 0ms;
+    -o-transition-delay: 0ms;
+    transition-delay: 0ms;
+
+    fill: var(--color);
+    fill-rule: evenodd;
+    opacity: 0;
+
+}
+
+.selected path:nth-child(2) { opacity: 1; }
+
+@-webkit-keyframes selected { 
+    to { 
+        stroke-dashoffset: 641.98; 
+    } 
+}
+
+@keyframes selected { 
+    to { 
+        stroke-dashoffset: 641.98; 
+    } 
+}
+
+.selected path:nth-child(3) { 
+    
+    opacity: .7; 
+
+    -webkit-transition-delay: 200ms;
+    -moz-transition-delay: 200ms;
+    -ms-transition-delay: 200ms;
+    -o-transition-delay: 200ms;
+    transition-delay: 200ms; 
+
+}
+
+/* Media Queries */
+
+@media screen and (min-width: 1300px) {
+
+    html,
+    body {
+        background: #eee;
+    }
+
+}
+
+@media screen and (max-width: 872px) {
+
+    :root {
+        --sprite-viewfinder-width: 436px;
+        --sprite-viewfinder-height: 240px; 
+    }
+
+    #viewfinder .item {
+        background: url("../img/sprites_c436.png");
+    }
+
+}
