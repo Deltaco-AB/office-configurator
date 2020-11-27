@@ -3,11 +3,11 @@ Workstation configurator for the DELTACO OFFICE product lineup.
 
 [Try the OFFICE Configurator live](https://www.deltaco.se/Sidor/office-configurator.aspx)
 
-**This is a port of the configurator built for deltaco.se**<br>Critical features absent from this version (1.3-alpha) are:
+**This is a port of the configurator built for deltaco.se.**<br>Critical features absent from this version (1.3-alpha) are:
 | Feature | Description |
 |--|--|
-| Check if user is logged in | A "logged in flag" check is not performed in this version of the configurator.<br><br>**Suggested solution:** Prompting users to log in before the configurator is shown
-| Check product availability | The configurator does not check whether a product exist in your catalogue and will happily add it.<br><br>**Suggested solution:** A comparison between the `payload` received from the configurator and a reference sheet on your website.
+| Check if user is logged in | A "logged in flag" check is not performed in this version of the configurator.<br><br>**Suggested solution:** Prompting users to log in before the configurator is shown if your webshop requires it.
+| Check product availability | The configurator does not check whether a product exist in your catalogue and will happily add it.<br><br>**Suggested solution:** A comparison between the `payload` received from the configurator and a reference sheet on your webshop.
 
 A refactor of the configurator with these- and additional features intended for third-party embedding is under development.
 
@@ -29,7 +29,7 @@ A refactor of the configurator with these- and additional features intended for 
   },false);
 </script>
 ```
-3. Replace `// ...` with code to handle the shopping cart process on your website.<br>See: [Payload Semantics](#payload-semantics)
+3. Replace `// ...` with code to handle the shopping cart process on your webshop.<br>See: [Payload Semantics](#payload-semantics)
 
 [Here's an example on deltaco.se](https://gist.github.com/VictorWesterlund/4b9273c8a3cdbc328bbf9d8c20c6b325)
 
