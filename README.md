@@ -3,6 +3,14 @@ Workstation configurator for the DELTACO OFFICE product lineup.
 
 [Try the OFFICE Configurator live](https://www.deltaco.se/Sidor/office-configurator.aspx)
 
+**This is a port of the configurator built for deltaco.se**<br>Critical features absent from this version (1.3-alpha) are:
+| Feature | Description |
+|--|--|
+| Check if user is logged in | A "logged in flag" check is not performed in this version of the configurator.<br><br>**Suggested solution:** Prompting users to log in before the configurator is shown
+| Check product availability | The configurator does not check whether a product exist in your catalogue and will happily add it.<br><br>**Suggested solution:** A comparison between the `payload` received from the configurator and a reference sheet on your website.
+
+A refactor of the configurator with these- and additional features intended for third-party embedding is under development.
+
 ## Get started
 
 1. Embedd `https://app.cloud.deltaco.eu/office-configurator` in an `<iframe>` on your page:
