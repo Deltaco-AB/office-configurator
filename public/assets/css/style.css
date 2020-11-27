@@ -37,14 +37,17 @@ body {
 /* Content */
 
 main {
+    --box-padding: 40px;
+    --height: 800px;
+    
     margin: auto;
     width: 100%;
     max-width: 1300px;
-    min-height: 800px;
-    max-height: 800px;
+    min-height: var(--height);
+    max-height: var(--height);
 
     box-sizing: border-box;
-    padding: 20px;
+    padding: 40px;
     background: white;
     border-radius: 20px;
 
@@ -108,8 +111,108 @@ main > div > * {
 #configure {
     width: 100%;
     height: 100%;
-    background: #f3f3f3;
+    background: #F3F3F3;
     border-radius: 20px;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+#configure > div {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: calc(var(--box-padding) / 2);
+}
+
+#configure > div:first-child {
+    align-items: flex-start;
+    background: #F8F8F8;
+}
+
+#configure > div:first-child {
+    align-items: flex-end;
+}
+
+#configure .categories {
+    width: 100%;
+    height: 10px;
+}
+
+#select {
+    --pages: 4;
+    --page-offset: (100% / var(--pages));
+
+    transition: 500ms transform;
+    padding: 0 !important;
+    width: calc(var(--pages) * 100%);
+    height: 100%;
+    background: green;
+
+    display: grid;
+    grid-template-columns: repeat(var(--pages), 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+#select .page {
+    transition: 500ms opacity, 500ms transform;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: red;
+    opacity: .7;
+    transform: scale(.7);
+}
+
+#select[data="1"] { transform: translateX(calc((var(--page-offset) * 0) * -1)); }
+#select[data="2"] { transform: translateX(calc((var(--page-offset) * 1) * -1)); }
+#select[data="3"] { transform: translateX(calc((var(--page-offset) * 2) * -1)); }
+#select[data="4"] { transform: translateX(calc((var(--page-offset) * 3) * -1)); }
+#select[data="5"] { transform: translateX(calc((var(--page-offset) * 4) * -1)); }
+#select[data="6"] { transform: translateX(calc((var(--page-offset) * 5) * -1)); }
+#select[data="7"] { transform: translateX(calc((var(--page-offset) * 6) * -1)); }
+#select[data="8"] { transform: translateX(calc((var(--page-offset) * 7) * -1)); }
+#select[data="9"] { transform: translateX(calc((var(--page-offset) * 8) * -1)); }
+#select[data="10"] { transform: translateX(calc((var(--page-offset) * 9) * -1)); }
+#select[data="11"] { transform: translateX(calc((var(--page-offset) * 10) * -1)); }
+#select[data="12"] { transform: translateX(calc((var(--page-offset) * 11) * -1)); }
+#select[data="13"] { transform: translateX(calc((var(--page-offset) * 12) * -1)); }
+#select[data="14"] { transform: translateX(calc((var(--page-offset) * 13) * -1)); }
+#select[data="15"] { transform: translateX(calc((var(--page-offset) * 14) * -1)); }
+#select[data="16"] { transform: translateX(calc((var(--page-offset) * 15) * -1)); }
+#select[data="17"] { transform: translateX(calc((var(--page-offset) * 16) * -1)); }
+#select[data="18"] { transform: translateX(calc((var(--page-offset) * 17) * -1)); }
+#select[data="19"] { transform: translateX(calc((var(--page-offset) * 18) * -1)); }
+#select[data="20"] { transform: translateX(calc((var(--page-offset) * 19) * -1)); }
+
+#select[data="1"] .page:nth-child(1),
+#select[data="2"] .page:nth-child(2),
+#select[data="3"] .page:nth-child(3),
+#select[data="4"] .page:nth-child(4),
+#select[data="5"] .page:nth-child(5),
+#select[data="6"] .page:nth-child(6),
+#select[data="7"] .page:nth-child(7),
+#select[data="8"] .page:nth-child(8),
+#select[data="9"] .page:nth-child(9),
+#select[data="10"] .page:nth-child(10),
+#select[data="11"] .page:nth-child(11),
+#select[data="12"] .page:nth-child(12),
+#select[data="13"] .page:nth-child(13),
+#select[data="14"] .page:nth-child(14),
+#select[data="15"] .page:nth-child(15),
+#select[data="16"] .page:nth-child(16),
+#select[data="17"] .page:nth-child(17),
+#select[data="18"] .page:nth-child(18),
+#select[data="19"] .page:nth-child(19),
+#select[data="20"] .page:nth-child(20) {
+    opacity: 1;
+    transform: scale(1);
 }
 
 /* Content > .loading */
