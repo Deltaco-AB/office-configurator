@@ -36,10 +36,6 @@ const products = {
         DELO0302: document.getElementsByClassName("DELO0302"),
         DELO0303: document.getElementsByClassName("DELO0303"),
         DELO0402: document.getElementsByClassName("DELO0402"),
-        /* featured */
-        DELC0001: document.getElementsByClassName("DELC0001"),
-        CK1027: document.getElementsByClassName("CK1027"),
-        USBCAR1: document.getElementsByClassName("USBCAR1")
     },
     incompatible: {
         // Compatability list. Array contains incompatible products
@@ -66,11 +62,7 @@ const products = {
         "DELO0152"
     ],
     // Remove featured and other session-added products on load
-    removeOnLoad: [
-        "DELC0001",
-        "CK1027",
-        "USBCAR1"
-    ],
+    removeOnLoad: [],
     translate: {
         // Translate office guide product numbers to their hyphen-equivalent
         // This object also defines multi-pack dependencies
@@ -94,10 +86,6 @@ const products = {
         DELO0302: ["DELO-0302"],
         DELO0303: ["DELO-0303"],
         DELO0402: ["DELO-0402"],
-        /* featured */
-        DELC0001: ["DELC-0001"],
-        CK1027: ["CK1027"],
-        USBCAR1: ["USBC-AR1"]
     }
 },
 
@@ -123,7 +111,7 @@ class DeltacoOfficeGuide {
         // Session based variables
         this.enviroment = {
             initialized: false, // True when class is initialized
-            loggedIn: true, // Becomes true if user is logged in
+            loggedIn: true,
             prompted: {
                 pageIndicator: false,
                 featuredProducts: false
@@ -302,15 +290,6 @@ class DeltacoOfficeGuide {
             return false; 
         }
 
-        // Prompt user with featured products if not shown before
-        if(!this.enviroment.prompted.featuredProducts) {
-            let featured = "<h1>Featured Products</h1>";
-            featured += "<p id='featuredIntro'>Check out these cool accessories</p><div id='featured'><div class='item'><img src='https://www.deltaco.se/sites/cdn/PublishingImages/Products/DELC-0001.png?width=260'><p>Conference speakerphone with USB and 3.5 mm headphone port, VoIP/Skype for Business.</p><p class='addToCart DELC0001'>+ Add</p></div><div class='item'><img src='https://www.deltaco.se/sites/cdn/PublishingImages/Products/CK1027.png?width=260'><p>Organically degradable universal cleaning wipes with an orange scent that can be used on various plastic and non metallic-surfaces found in an office.</p><p class='addToCart CK1027'>+ Add</p></div><div class='item'><img src='https://www.deltaco.se/sites/cdn/PublishingImages/Products/USBC-AR1.png?width=260'><p>USBC-AR1 allows you to make a laptop, desktop-computer, or other device with a USB-C input compatible with a variety of connection options.</p><p class='addToCart USBCAR1'>+ Add</p></div></div><p class='checkout'>Go to Cart</p>";
-
-            this.enviroment.popup.content.innerHTML = this.enviroment.popup.HTML + featured;
-            return false;
-        }
-
         // Remove all fourth page products if no fourth page enabler is in configuration
         if(!configuration.products.some(item => products.enableFourth.indexOf(item) >= 0)) {
             const stageFourProducts = products.stages[4]; // Get array of fourth stage products
@@ -323,7 +302,7 @@ class DeltacoOfficeGuide {
         // All the innerHTML will be concatenated with this variable
         let summary = "<h1>Summary</h1>";
 
-        // Featured products and wrapper for summary list
+        // Wrapper for summary list
         summary += "<div class='options'><div class='check checked'><div><svg version='1.1' viewBox='0 0 48 48' xml:space='preserve' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g><polygon points='16,41.1 1.3,26.4 2.7,24.9 16,38.2 45.3,8.9 46.7,10.4  '/></g></svg></div></div><p>Buy your configuration in bulk</p><div class='amount bulk'><input id='bulkQuantity' type='number' value='1'></div></div><div class='summary'><div class='content'>";
 
         // List each product in the configuration
@@ -482,11 +461,6 @@ class DeltacoOfficeGuide {
             console.warn("Configuration has already been loaded"); 
             return false; 
         }
-
-        // Test if user is logged in
-        // If we can't find the "log in" element, user must be logged in
-        const loggedIn = new URLSearchParams(window.location.search);
-        if(loggedIn.has("au")) { this.enviroment.loggedIn = true; }
 
         this.setStage();
         this.loadConfiguration();
@@ -673,24 +647,6 @@ function eventHandler(evt) {
 
         // Add configuration to shopping cart
         case "checkout":
-            // Next button from featured products
-            if(!guide.enviroment.prompted.featuredProducts) {
-                guide.enviroment.popup.container.classList.remove("active");
-                guide.enviroment.prompted.featuredProducts = true;
-
-                guide.openSummary();
-
-                return false;
-            }
-
-            // Make user log in before checking out
-            if(!guide.enviroment.loggedIn) { 
-                guide.save(); 
-                window.location.href = `https://${location.host}/_layouts/15/Authenticate.aspx?Source=` + window.location.pathname; 
-
-                return false;
-            }
-
             // Helper function
             // Called when configuration has been added to cart
             function addedToCart() {
