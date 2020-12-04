@@ -9,8 +9,8 @@ folder = (
 )
 
 sizes = 3 # No. of scaled sheets
-cSheetRect = (872,581) # Configurator sheet dimensions
-tSheetSquare = 256 # Thumbail sheet dimensions (width and height)
+confgSheet = (872,581) # Configurator sheet dimensions
+thumbSheet = 256 # Thumbail sheet dimensions (width and height)
 
 # Create new sheets
 configurator = PySheeter.Sheet()
@@ -31,17 +31,22 @@ for key in data["products"]:
 for i in range(sizes):
 	if(i == 0):
 		# 1x (original) size
-		configurator.put(f"{folder[2]}c_{cSheetRect[0]}x{cSheetRect[1]}.png",cSheetRect)
-		thumb.put(f"{folder[2]}t_{tSheetSquare}x{tSheetSquare}.png",(tSheetSquare,tSheetSquare))
+		configurator.put(f"{folder[2]}confg-1.0x.png",confgSheet)
+		thumb.put(f"{folder[2]}thumb-1.0x.png",(thumbSheet,thumbSheet))
 		continue
 	
 	# Scale dimensions
 	factor = i * 1.5 # Limit factor
-	cSheetRectScaled = (
-		math.floor(cSheetRect[0] / factor),
-		math.floor(cSheetRect[1] / factor)
+	confgSheetScaled = (
+		math.floor(confgSheet[0] / factor),
+		math.floor(confgSheet[1] / factor)
 	)
-	tSheetSquareScaled = math.floor(tSheetSquare / factor)
+	thumbSheetScaled = math.floor(thumbSheet / factor)
 
-	configurator.put(f"{folder[2]}c_{cSheetRectScaled[0]}x{cSheetRectScaled[1]}.png",cSheetRectScaled)
-	thumb.put(f"{folder[2]}t_{tSheetSquareScaled}x{tSheetSquareScaled}.png",(tSheetSquareScaled,tSheetSquareScaled))
+	screen = str(round(factor))
+
+	configurator.put(f"{folder[2]}confg-0.{screen}x.png",confgSheetScaled)
+	print(f"Scaled sheet: confg-0.{screen}x.png: {str(confgSheetScaled)}")
+
+	thumb.put(f"{folder[2]}thumb-0.{screen}x.png",(thumbSheetScaled,thumbSheetScaled))
+	print(f"Scaled sheet: thumb-0.{screen}x.png: {str(thumbSheetScaled)}")

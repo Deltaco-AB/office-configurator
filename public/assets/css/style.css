@@ -81,7 +81,7 @@ main > div > * {
 
 #viewfinder .item {
     position: absolute;
-    background: url("../img/sprites_c872x581.png");
+    background: url("../img/sheets/confg-1.0x.png");
     background-size: var(--sprite-viewfinder-width);
     width: var(--sprite-viewfinder-width);
     height: var(--sprite-viewfinder-height);
@@ -340,8 +340,8 @@ main > div > * {
 @media screen and (max-width: 872px) {
 
     :root {
-        --sprite-viewfinder-width: 436px;
-        --sprite-viewfinder-height: 290px; 
+        --sprite-viewfinder-width: 581px;
+        --sprite-viewfinder-height: 387px; 
     }
 
     main {
@@ -359,7 +359,7 @@ main > div > * {
     }
 
     #viewfinder .item {
-        background: url("../img/sprites_c436x290.png");
+        background: url("../img/sheets/confg-0.2x.png");
     }
 
     #configure {
@@ -375,11 +375,11 @@ main > div > * {
 }
 
 /* Scale 0.25x */
-@media screen and (max-width: 436px) {
+@media screen and (max-width: 581px) {
 
     :root {
-        --sprite-viewfinder-width: 218px;
-        --sprite-viewfinder-height: 145px; 
+        --sprite-viewfinder-width: 290px;
+        --sprite-viewfinder-height: 193px; 
     }
 
     main {
@@ -402,7 +402,7 @@ main > div > * {
     }
 
     #viewfinder .item {
-        background: url("../img/sprites_c218x145.png");
+        background: url("../img/sheets/confg-0.3x.png");
     }
 
     #configure {
