@@ -6,6 +6,8 @@
     /* Sprite dimensions */
     --sprite-viewfinder-width: 872px;
     --sprite-viewfinder-height: 581px;
+    --sprite-thumbnail-width: 128px;
+    --sprite-thumbnail-height: 128px;
 }
 
 html,
@@ -36,12 +38,59 @@ body {
     justify-content: unset;
 }
 
-/* Content */
+/* Content > Template */
+
+.button {
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    border-radius: 6px;
+    color: rgb(var(--text-color));
+    background: rgb(var(--color-accent));
+    padding: 0 var(--box-padding) 0 var(--box-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.button.phantom {
+    background: rgba(var(--color),.0);
+    border-radius: 0;
+    color: initial;
+}
+
+.button.phantom + .button.phantom {
+    border-left: solid 1px black;
+}
+
+.button img {
+    height: 1.5em;
+}
+
+.button span {
+    display: flex;
+    align-items: center;
+}
+
+.button span > p::before {
+    content: "";
+    padding-left: calc(var(--box-padding-inner) / 2);
+}
+
+/* --- */
+
+.loading {
+    border-radius: 100%;
+    z-index: 10;
+}
+
+/* Content > Page */
 
 main {
     --box-padding: 40px;
     --box-padding-inner: calc(var(--box-padding) / 1.5);
-    --height: 800px;
+    --height: 850px;
     
     margin: auto;
     width: 100%;
@@ -73,6 +122,44 @@ main > div > * {
 }
 
 /* --- */
+
+#summary {
+    position: absolute;
+    bottom: var(--box-padding);
+    left: var(--box-padding);
+}
+
+#summary * {
+    margin: 0;
+}
+
+#summary h1 {
+    font-size: 4em;
+}
+
+#summary h2 {
+    font-size: 2em;
+}
+
+#summary .actions:first-of-type {
+    margin-top: var(--box-padding-inner);
+}
+
+#summary .actions {
+    height: 40px;
+}
+
+#summary .button {
+    width: 100%;
+    height: 100%;
+    font-size: 1em;
+    background: rgb(var(--color));
+    border-radius: 100px;
+}
+
+#summary .button.button.phantom:first-child {
+    padding-left: 0;
+}
 
 #viewfinder {
     width: 100%;
@@ -128,9 +215,6 @@ main > div > * {
 }
 
 #configure > div {
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
     padding: var(--box-padding-inner);
 }
 
@@ -146,6 +230,25 @@ main > div > * {
 #configure .categories {
     width: 100%;
     height: 10px;
+}
+
+/* --- */
+
+#header {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.actions .button {
+    font-size: 1.1em;
+    justify-self: flex-end;
 }
 
 #select {
@@ -178,7 +281,16 @@ main > div > * {
     transform: scale(.9);
     box-sizing: border-box;
     padding: var(--box-padding-inner);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+#select .grid {
+    --size: 400px;
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -186,10 +298,91 @@ main > div > * {
     grid-row-gap: var(--gap);
 }
 
-#select .page > div {
+#select .grid > div {
     position: relative;
     background: rgba(var(--color),.1);
     border-radius: 6px;
+}
+
+#select .grid > div > div {
+    background-image: url("../img/sheets/thumb-1.0x.png");
+    background-size: var(--sprite-thumbnail-width);
+    background-position-y: calc(var(--sprite-thumbnail-height) * -0);
+    width: var(--sprite-thumbnail-width);
+    height: var(--sprite-thumbnail-height);
+}
+
+#select .grid > div.active {
+    background: white;
+}
+
+/* Content > .selected */
+
+#select svg path:nth-child(2) {
+
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -ms-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
+
+    fill: rgba(255,255,255,.8);
+    stroke: rgb(var(--color));
+    stroke-width: 3px;
+    opacity: 0;
+
+    stroke-dasharray: 10;
+    stroke-dashoffset: 0;
+
+    animation: selected 30s infinite linear;
+    animation-delay: 100ms;
+
+}
+
+#select svg path:nth-child(3) {
+
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -ms-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
+
+    -webkit-transition-delay: 0ms;
+    -moz-transition-delay: 0ms;
+    -ms-transition-delay: 0ms;
+    -o-transition-delay: 0ms;
+    transition-delay: 0ms;
+
+    fill: rgb(var(--color));
+    fill-rule: evenodd;
+    opacity: 0;
+
+}
+
+#select svg path:nth-child(2) { opacity: 1; }
+
+@-webkit-keyframes selected { 
+    to { 
+        stroke-dashoffset: 641.98; 
+    } 
+}
+
+@keyframes selected { 
+    to { 
+        stroke-dashoffset: 641.98; 
+    } 
+}
+
+#select svg path:nth-child(3) { 
+    
+    opacity: .7; 
+
+    -webkit-transition-delay: 200ms;
+    -moz-transition-delay: 200ms;
+    -ms-transition-delay: 200ms;
+    -o-transition-delay: 200ms;
+    transition-delay: 200ms; 
+
 }
 
 /* var() can currently not be used in psuedo-classes */
@@ -219,119 +412,22 @@ main > div > * {
 
 /* --- */
 
-#actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+#paging {
+    color: rgb(var(--color));
 }
 
-#actions .button {
-    font-size: 1.1em;
-}
-
-#pages > div {
-    --size: 55px;
-    --color-alpha: .1;
-
+#paging > div {
+    --size: 50px;
     width: var(--size);
     height: var(--size);
+    background: rgba(var(--color),.1);
     border-radius: 100%;
-    font-size: calc(var(--size) / 2);
-    color: rgba(0,0,0,var(--color-alpha));
-    background: rgb(var(--color),var(--color-alpha));
+    color: white;
+    font-size: 1.5em;
 }
 
-#pages > p {
-    margin: calc(var(--box-padding-inner) / 2);
-}
-
-/* Content > .button */
-
-.button {
-    font-size: 1em;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: .15em;
-    border-radius: 6px;
-    color: rgb(var(--text-color));
-    background: rgb(var(--color-accent));
-    padding: 0 var(--box-padding) 0 var(--box-padding);
-}
-
-/* Content > .loading */
-
-.loading {
-    border-radius: 100%;
-    z-index: 10;
-}
-
-/* Content > .selected */
-
-.selected path:nth-child(2) {
-
-    -webkit-transition: 300ms;
-    -moz-transition: 300ms;
-    -ms-transition: 300ms;
-    -o-transition: 300ms;
-    transition: 300ms;
-
-    fill: rgba(255,255,255,.8);
-    stroke: rgb(var(--color));
-    stroke-width: 3px;
-    opacity: 0;
-
-    stroke-dasharray: 10;
-    stroke-dashoffset: 0;
-
-    animation: selected 30s infinite linear;
-    animation-delay: 100ms;
-
-}
-
-.selected path:nth-child(3) {
-
-    -webkit-transition: 300ms;
-    -moz-transition: 300ms;
-    -ms-transition: 300ms;
-    -o-transition: 300ms;
-    transition: 300ms;
-
-    -webkit-transition-delay: 0ms;
-    -moz-transition-delay: 0ms;
-    -ms-transition-delay: 0ms;
-    -o-transition-delay: 0ms;
-    transition-delay: 0ms;
-
-    fill: rgb(var(--color));
-    fill-rule: evenodd;
-    opacity: 0;
-
-}
-
-.selected path:nth-child(2) { opacity: 1; }
-
-@-webkit-keyframes selected { 
-    to { 
-        stroke-dashoffset: 641.98; 
-    } 
-}
-
-@keyframes selected { 
-    to { 
-        stroke-dashoffset: 641.98; 
-    } 
-}
-
-.selected path:nth-child(3) { 
-    
-    opacity: .7; 
-
-    -webkit-transition-delay: 200ms;
-    -moz-transition-delay: 200ms;
-    -ms-transition-delay: 200ms;
-    -o-transition-delay: 200ms;
-    transition-delay: 200ms; 
-
+#paging span {
+    margin: 10px;
 }
 
 /* Media Queries */
@@ -356,6 +452,7 @@ main > div > * {
     main > div {
         height: 50%;
         align-items: flex-start;
+        justify-content: center;
     }
 
     #viewfinder .item {
@@ -364,8 +461,7 @@ main > div > * {
 
     #configure {
         top: 0;
-        width: 100%;
-        height: 600px;
+        height: 700px;
     }
 
     #select {
@@ -383,6 +479,10 @@ main > div > * {
     }
 
     main {
+        --box-padding: 10vw;
+        --box-padding-inner: calc(var(--box-padding) / 1.5);
+        --height: 100vh;
+
         margin: 0;
         max-height: unset;
         min-height: unset;

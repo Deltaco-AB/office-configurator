@@ -58,7 +58,9 @@
 			"multipack": [
 				"DELO-0151"
 			],
-			"triggers": {}
+			"triggers": {
+				"category": 4
+			}
 		},
 		"DELO-0153": {
 			"category": 3,
@@ -69,7 +71,9 @@
 			"multipack": [
 				"DELO-0151"
 			],
-			"triggers": {}
+			"triggers": {
+				"category": 4
+			}
 		},
 		"DELO-0155": {
 			"category": 4,
