@@ -11,7 +11,7 @@ Workstation configurator for the DELTACO OFFICE product lineup.
 
 A refactor of the configurator with these- and additional features intended for third-party embedding is under development.
 
-## Get started
+## Get Started
 
 1. Embedd `https://app.cloud.deltaco.eu/office-configurator` in an `<iframe>` on your page:
 ```html
@@ -49,9 +49,9 @@ The configurator dispatches a [`postMessage()`](https://developer.mozilla.org/en
 
 ### Type: `cart`
 
-User has submitted their configuration. This event lists all products and quantities added to the shopping cart.
+User has submitted their configuration. This event lists all products (by EAN code) and quantities added to the shopping cart.
 
-The `payload` object  contains a key-value pair with the `quantity` as value, and `ItemID` as key.
+The `payload` object  contains a key-value pair with the `quantity` as value, and [`EAN-13 code`](https://en.wikipedia.org/wiki/International_Article_Number) as key.
 
 <br>
 
@@ -60,9 +60,9 @@ The `payload` object  contains a key-value pair with the `quantity` as value, an
 {
   "type": "cart",
   "payload": {
-    "DELO-0100": 10,
-    "DELO-0157": 5,
-    "DELO-0203": 6
+    "7333048043450": 10,
+    "7333048043535": 5,
+    "7333048043672": 6
   }
 }
 ```
@@ -83,9 +83,9 @@ window.addEventListener("message", (event) => {
 });
 
 /* Example output:
-User added 10 of 'DELO-0100' to their shopping cart.
-User added 5 of 'DELO-0157' to their shopping cart.
-User added 6 of 'DELO-0203' to their shopping cart.
+User added 10 of '7333048043450' to their shopping cart.
+User added 5 of '7333048043535' to their shopping cart.
+User added 6 of '7333048043672' to their shopping cart.
 */
 ```
 

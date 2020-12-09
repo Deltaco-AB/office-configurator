@@ -66,26 +66,26 @@ const products = {
     translate: {
         // Translate office guide product numbers to their hyphen-equivalent
         // This object also defines multi-pack dependencies
-        DELO0201: ["DELO-0201"],
-        DELO0100: ["DELO-0100"],
-        DELC0100: ["DELC-0100"],
-        DELO0150: ["DELO-0150"],
-        DELO0152: ["DELO-0152","DELO-0151"],
-        DELO0153: ["DELO-0153","DELO-0151"],
-        DELO0155: ["DELO-0155"],
-        DELO0154: ["DELO-0154"],
-        DELO0156: ["DELO-0156"],
-        DELO0157: ["DELO-0157"],
-        DELO0158: ["DELO-0158"],
-        DELO0200: ["DELO-0200"],
-        DELO0202: ["DELO-0202"],
-        DELO0301: ["DELO-0301"],
-        DELO0203: ["DELO-0203"],
-        DELO0204: ["DELO-0204"],
-        DELO0300: ["DELO-0300"],
-        DELO0302: ["DELO-0302"],
-        DELO0303: ["DELO-0303"],
-        DELO0402: ["DELO-0402"],
+        DELO0201: ["7333048043566"],
+        DELO0100: ["7333048043450"],
+        DELC0100: ["7333048042460"],
+        DELO0150: ["7333048043467"],
+        DELO0152: ["7333048043474","7333048043481"],
+        DELO0153: ["7333048043498","7333048043474"],
+        DELO0155: ["7333048043511"],
+        DELO0154: ["7333048043504"],
+        DELO0156: ["7333048043528"],
+        DELO0157: ["7333048043535"],
+        DELO0158: ["7333048043542"],
+        DELO0200: ["7333048043559"],
+        DELO0202: ["7333048043573"],
+        DELO0301: ["7333048043597"],
+        DELO0203: ["7333048043672"],
+        DELO0204: ["7333048043689"],
+        DELO0300: ["7333048043580"],
+        DELO0302: ["7333048043603"],
+        DELO0303: ["7333048043610"],
+        DELO0402: ["7333048044150"],
     }
 },
 
@@ -319,7 +319,7 @@ class DeltacoOfficeGuide {
 
             summary += `<div class='item ${product}'>
                 <div class='thumb'></div>
-                <h2>${DeltacoOfficeGuide.translate(product)}<br><span>${multipackText}</span></h2>
+                <h2>${product}<br><span>${multipackText}</span></h2>
                 <div class='amount'>
                     <input type='number' value='1' class='${product}'>
                 </div>
