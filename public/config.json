@@ -21,45 +21,48 @@
 		"DELO-0201": {
 			"category": 3,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0100": {
 			"category": 1,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {
+				"startActive": true,
+				"outlined": true
+			}
 		},
 		"DELC-0100": {
 			"category": 3,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0150": {
 			"category": 3,
 			"incompatible": [
 				"DELO-0153"
 			],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0151": {
 			"category": 0,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0152": {
 			"category": 3,
 			"incompatible": [
 				"DELO-0153"
 			],
-			"multipack": [
+			"add": [
 				"DELO-0151"
 			],
-			"triggers": {
-				"category": 4
+			"flags": {
+				"enableCategory": 4
 			}
 		},
 		"DELO-0153": {
@@ -68,54 +71,54 @@
 				"DELO-0150",
 				"DELO-0152"
 			],
-			"multipack": [
+			"add": [
 				"DELO-0151"
 			],
-			"triggers": {
-				"category": 4
+			"flags": {
+				"enableCategory": 4
 			}
 		},
 		"DELO-0155": {
 			"category": 4,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0154": {
 			"category": 4,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0156": {
 			"category": 4,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0157": {
 			"category": 4,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0158": {
 			"category": 4,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0200": {
 			"category": 3,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0202": {
 			"category": 3,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0301": {
 			"category": 2,
@@ -123,24 +126,24 @@
 				"DELO-0300",
 				"DELO-0302"
 			],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0203": {
 			"category": 3,
 			"incompatible": [
 				"DELO-0204"
 			],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0204": {
 			"category": 3,
 			"incompatible": [
 				"DELO-0203"
 			],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0300": {
 			"category": 2,
@@ -148,8 +151,8 @@
 				"DELO-0301",
 				"DELO-0302"
 			],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0302": {
 			"category": 2,
@@ -158,22 +161,22 @@
 				"DELO-0301",
 				"DELO-0300"
 			],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0303": {
 			"category": 2,
 			"incompatible": [
 				"DELO-0302"
 			],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		},
 		"DELO-0402": {
 			"category": 3,
 			"incompatible": [],
-			"multipack": [],
-			"triggers": {}
+			"add": [],
+			"flags": {}
 		}
 	}
 }

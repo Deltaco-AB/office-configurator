@@ -52,6 +52,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    cursor: pointer;
 }
 
 .button.phantom {
@@ -90,7 +91,7 @@ body {
 main {
     --box-padding: 40px;
     --box-padding-inner: calc(var(--box-padding) / 1.5);
-    --height: 850px;
+    --height: 800px;
     
     margin: auto;
     width: 100%;
@@ -129,10 +130,6 @@ main > div > * {
     left: var(--box-padding);
 }
 
-#summary * {
-    margin: 0;
-}
-
 #summary h1 {
     font-size: 4em;
 }
@@ -147,18 +144,12 @@ main > div > * {
 
 #summary .actions {
     height: 40px;
+    width: 300px;
+    cursor: pointer;
 }
 
-#summary .button {
-    width: 100%;
-    height: 100%;
-    font-size: 1em;
-    background: rgb(var(--color));
-    border-radius: 100px;
-}
-
-#summary .button.button.phantom:first-child {
-    padding-left: 0;
+#summary .action[data="clear"] {
+    background: rgba(var(--color),.05);
 }
 
 #viewfinder {
@@ -209,7 +200,7 @@ main > div > * {
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 3fr .5fr;
+    grid-template-rows: .5fr 3fr .5fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 }
@@ -227,23 +218,27 @@ main > div > * {
     align-items: flex-end;
 }
 
-#configure .categories {
-    width: 100%;
-    height: 10px;
-}
-
 /* --- */
-
-#header {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, 1fr);
-}
 
 .actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.actions .action {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    font-size: 1em;
+    padding-left: var(--box-padding-inner);
+    padding-right: var(--box-padding-inner);
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+.actions .action img {
+    margin-right: calc(var(--box-padding-inner) / 2);
 }
 
 .actions .button {
@@ -254,7 +249,7 @@ main > div > * {
 #select {
     --page: 0; /* fallback */
     --page-count: 4;
-    --page-anim-speed: 500ms;
+    --page-anim-speed: 400ms;
     --page-offset: (100% / var(--page-count));
 
     transition: var(--page-anim-speed) transform;
@@ -277,7 +272,7 @@ main > div > * {
     position: relative;
     width: 100%;
     height: 100%;
-    opacity: .7;
+    opacity: .5;
     transform: scale(.9);
     box-sizing: border-box;
     padding: var(--box-padding-inner);
@@ -298,13 +293,13 @@ main > div > * {
     grid-row-gap: var(--gap);
 }
 
-#select .grid > div {
+#select .item {
     position: relative;
     background: rgba(var(--color),.1);
     border-radius: 6px;
 }
 
-#select .grid > div > div {
+#select .item > div {
     background-image: url("../img/sheets/thumb-1.0x.png");
     background-size: var(--sprite-thumbnail-width);
     background-position-y: calc(var(--sprite-thumbnail-height) * -0);
@@ -312,41 +307,37 @@ main > div > * {
     height: var(--sprite-thumbnail-height);
 }
 
-#select .grid > div.active {
+#select .item.active {
     background: white;
+    cursor: pointer;
 }
 
 /* Content > .selected */
 
+#select svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(.8);
+}
+
 #select svg path:nth-child(2) {
-
-    -webkit-transition: 300ms;
-    -moz-transition: 300ms;
-    -ms-transition: 300ms;
-    -o-transition: 300ms;
     transition: 300ms;
-
     fill: rgba(255,255,255,.8);
     stroke: rgb(var(--color));
     stroke-width: 3px;
     opacity: 0;
-
     stroke-dasharray: 10;
     stroke-dashoffset: 0;
-
     animation: selected 30s infinite linear;
     animation-delay: 100ms;
 
 }
 
 #select svg path:nth-child(3) {
-
-    -webkit-transition: 300ms;
-    -moz-transition: 300ms;
-    -ms-transition: 300ms;
-    -o-transition: 300ms;
     transition: 300ms;
-
     -webkit-transition-delay: 0ms;
     -moz-transition-delay: 0ms;
     -ms-transition-delay: 0ms;
@@ -356,7 +347,6 @@ main > div > * {
     fill: rgb(var(--color));
     fill-rule: evenodd;
     opacity: 0;
-
 }
 
 #select svg path:nth-child(2) { opacity: 1; }
@@ -374,15 +364,12 @@ main > div > * {
 }
 
 #select svg path:nth-child(3) { 
-    
     opacity: .7; 
-
     -webkit-transition-delay: 200ms;
     -moz-transition-delay: 200ms;
     -ms-transition-delay: 200ms;
     -o-transition-delay: 200ms;
     transition-delay: 200ms; 
-
 }
 
 /* var() can currently not be used in psuedo-classes */
