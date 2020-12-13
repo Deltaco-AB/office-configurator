@@ -8,7 +8,7 @@ folder = (
 	"../public/assets/img/sheets/" # Destination folder
 )
 
-sizes = 3 # No. of scaled sheets
+sizes = 3 # No. scaled sheets
 confgSheet = (872,581) # Configurator sheet dimensions
 thumbSheet = 256 # Thumbail sheet dimensions (width and height)
 
