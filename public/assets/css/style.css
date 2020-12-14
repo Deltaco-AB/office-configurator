@@ -445,7 +445,10 @@ main > div > * {
 
 /* Modal */
 
-#modal {
+.modal {
+    --transition-duration: 300ms;
+    
+    transition: var(--transition-duration) opacity;
     position: fixed;
     width: 100%;
     height: 100%;
@@ -455,7 +458,13 @@ main > div > * {
     pointer-events: none;
 }
 
-#modal .inner {
+.modal.active {
+    opacity: 1;
+    pointer-events: initial;
+}
+
+.modal .inner {
+    transition: var(--transition-duration) transform;
     position: absolute;
     box-sizing: border-box;
     max-height: 70%;
@@ -464,37 +473,38 @@ main > div > * {
     border-radius: 20px;
     box-shadow: 0 0 0 calc(var(--box-padding-inner) / 2) rgba(var(--color),.1);
     overflow-x: hidden;
-    -webkit-filter: brightness(.8);
-    filter: brightness(.8);
+    transform: scale(.8);
+    opacity: 0;
 }
 
-#modal .inner:last-child {
-    filter: unset;
+.modal.active .inner {
+    transform: scale(1);
+    opacity: 1;
 }
 
-#modal .inner::-webkit-scrollbar {
+.modal .inner::-webkit-scrollbar {
     width: 10px;
 }
 
-#modal .inner::-webkit-scrollbar-thumb {
+.modal .inner::-webkit-scrollbar-thumb {
     background: rgb(var(--color));
     border-radius: 10px;
 }
 
-#modal .header {
+.modal .header {
     display: flex;
     justify-content: space-between;
     margin-bottom: calc(var(--box-padding-inner) / 2);
 }
 
-#modal .header img {
+.modal .header img {
     height: 50px;
     cursor: pointer;
 }
 
 /* --- */
 
-#modal input[type="number"] {
+.modal input[type="number"] {
     height: 50%;
     width: 60px;
     background: rgba(var(--color),.1);
@@ -505,7 +515,7 @@ main > div > * {
     font-size: 1.2em;
 }
 
-#modal .bulk {
+.modal .bulk {
     --background-color: transparent;
     position: relative;
     box-sizing: border-box;
@@ -514,11 +524,11 @@ main > div > * {
     border-radius: 6px;
 }
 
-#modal .bulk p {
+.modal .bulk p {
     font-weight: initial !important;
 }
 
-#modal .summary {
+.modal .summary {
     --pseudo-height: 46px;
     --background-color: rgba(var(--color),.03);
     width: 500px;
@@ -530,7 +540,7 @@ main > div > * {
     margin-bottom: var(--pseudo-height);
 }
 
-#modal .summary::after {
+.modal .summary::after {
     content: " ";
     display: block;
     position: absolute;
@@ -543,27 +553,27 @@ main > div > * {
     background-size: 0px 100%, 9px 27px, 9px 27px;
 }
 
-#modal .item {
+.modal .item {
     --sprite-thumbnail-width: 85px;
     --sprite-thumbnail-height: 85px;
     height: var(--sprite-thumbnail-height);
     justify-content: flex-start;
 }
 
-#modal .item + .item {
+.modal .item + .item {
     border-top: solid 2px rgba(var(--color),.05);
     margin-top: calc(var(--box-padding-inner) / 2);
     padding-top: calc(var(--box-padding-inner) / 2);
 }
 
-#modal .item p {
+.modal .item p {
     margin-left: var(--box-padding-inner);
     font-size: 1.2em;
     font-weight: bold;
     word-break: break-all;
 }
 
-#modal .item .img {
+.modal .item .img {
     background-image: url("../img/sheets/thumb-0.3x.png");
     background-size: var(--sprite-thumbnail-width);
     background-position-y: calc(var(--sprite-thumbnail-height) * -0);
