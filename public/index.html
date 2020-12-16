@@ -9,13 +9,13 @@
 <body>
     <main>
         <div class="center">
-            <img class="loading" src="assets/img/loading.gif"/>
+            <!--<img class="loading" src="assets/img/loading.gif"/>-->
             <div id="viewfinder" class="center">
                 <!--<div class="item" data="DELO-0201"></div>-->
             </div>
             <div id="summary">
-                <h1></h1>
-                <h2>My Configuration</h2>
+                <h1 id="totalPrice"></h1>
+                <h2 id="configName"></h2>
                 <div class="actions">
                     <div data="clear" class="action center y">
                         <img src="assets/img/icon_restart.svg"/>
@@ -56,34 +56,10 @@
                             <div class="item center"></div>
                         </div>
                     </div>
-                    <div class="page">
-                        <div class="grid">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div class="page">
-                        <div class="grid">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div class="page">
-                        <div class="grid">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
                 </div>
                 <div id="paging" class="center">
                     <div class="center prev"><p>&lt;</p></div>
-                    <p><span>1</span>/<span>1</span></p>
+                    <p><span id="currentPage">0</span>/<span id="totalPages">0</span></p>
                     <div class="center next"><p>&gt;</p></div>
                 </div>
             </div>

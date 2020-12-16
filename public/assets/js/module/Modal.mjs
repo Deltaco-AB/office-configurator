@@ -3,14 +3,15 @@ export class Modal {
 	static transitionDuration = 300;
 
 	constructor(content,title = false) {
-		this.element = Modal.createElement("modal center");
+		this.element = Modal.createDiv("modal center");
 		this.element.close = () => this.close();
 
 		this.appendContent(content,title);
 		this.open();
 	}
 
-	static createElement(classes) {
+	// Create a div with classes
+	static createDiv(classes) {
 		let element = document.createElement("div");
 		element.classList = classes;
 
@@ -18,15 +19,20 @@ export class Modal {
 	}
 
 	appendContent(content,title) {
-		let inner = Modal.createElement("inner");
+		let inner = Modal.createDiv("inner");
 
+		// Modal header
 		if(title) {
 			inner.insertAdjacentHTML("afterbegin",`<div class='header center'><h1>${title}</h1><img onclick='this.closest(".modal").close()' src='assets/img/icon_close.svg'/></div>`);
 		}
+
+		// Insert modal "inner" content
 		inner.insertAdjacentHTML("beforeend",content);
 
 		this.element.appendChild(inner);
 	}
+	
+	// ----
 
 	open() {
 		document.body.appendChild(this.element);

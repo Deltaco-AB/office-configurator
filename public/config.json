@@ -1,6 +1,5 @@
 {
-	"default": "My Configuration",
-	"origin": "app.cloud.deltaco.eu",
+	"defaultName": "My Configuration",
 	"categories": {
 		"1": {
 			"name": "Desktops",

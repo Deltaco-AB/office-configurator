@@ -189,39 +189,26 @@ main > div > * {
 }
 
 #viewfinder .item {
+    transition: 300ms opacity,300ms transform;
     position: absolute;
     background: url("../img/sheets/confg-1.0x.png");
     background-size: var(--sprite-viewfinder-width);
     width: var(--sprite-viewfinder-width);
     height: var(--sprite-viewfinder-height);
+    opacity: 0;
+    transform: scale(.95);
 }
 
-/* Content > Spritesheet offsets */
-
-#viewfinder .item:nth-child(1) { background-position-y: calc(var(--sprite-viewfinder-height) * -1); }
-#viewfinder .item:nth-child(2) { background-position-y: calc(var(--sprite-viewfinder-height) * -2); }
-#viewfinder .item:nth-child(3) { background-position-y: calc(var(--sprite-viewfinder-height) * -3); }
-#viewfinder .item:nth-child(4) { background-position-y: calc(var(--sprite-viewfinder-height) * -4); }
-#viewfinder .item:nth-child(5) { background-position-y: calc(var(--sprite-viewfinder-height) * -5); }
-#viewfinder .item:nth-child(6) { background-position-y: calc(var(--sprite-viewfinder-height) * -6); }
-#viewfinder .item:nth-child(7) { background-position-y: calc(var(--sprite-viewfinder-height) * -7); }
-#viewfinder .item:nth-child(8) { background-position-y: calc(var(--sprite-viewfinder-height) * -8); }
-#viewfinder .item:nth-child(9) { background-position-y: calc(var(--sprite-viewfinder-height) * -9); }
-#viewfinder .item:nth-child(10) { background-position-y: calc(var(--sprite-viewfinder-height) * -10); }
-#viewfinder .item:nth-child(11) { background-position-y: calc(var(--sprite-viewfinder-height) * -11); }
-#viewfinder .item:nth-child(12) { background-position-y: calc(var(--sprite-viewfinder-height) * -12); }
-#viewfinder .item:nth-child(13) { background-position-y: calc(var(--sprite-viewfinder-height) * -13); }
-#viewfinder .item:nth-child(14) { background-position-y: calc(var(--sprite-viewfinder-height) * -14); }
-#viewfinder .item:nth-child(15) { background-position-y: calc(var(--sprite-viewfinder-height) * -15); }
-#viewfinder .item:nth-child(16) { background-position-y: calc(var(--sprite-viewfinder-height) * -16); }
-#viewfinder .item:nth-child(17) { background-position-y: calc(var(--sprite-viewfinder-height) * -17); }
-#viewfinder .item:nth-child(18) { background-position-y: calc(var(--sprite-viewfinder-height) * -18); }
-#viewfinder .item:nth-child(19) { background-position-y: calc(var(--sprite-viewfinder-height) * -19); }
-#viewfinder .item:nth-child(20) { background-position-y: calc(var(--sprite-viewfinder-height) * -20); }
+#viewfinder .item.selected {
+    opacity: 1;
+    transform: scale(1);
+}
 
 /* --- */
 
 #configure {
+    --page-count: 4;
+
     width: 450px;
     height: 90%;
     align-self: center;
@@ -279,7 +266,6 @@ main > div > * {
 
 #select {
     --page: 0; /* fallback */
-    --page-count: 4;
     --page-anim-speed: 400ms;
     --page-offset: (100% / var(--page-count));
 
@@ -399,26 +385,26 @@ main > div > * {
 }
 
 /* var() can currently not be used in psuedo-classes */
-#select[style="--page:0"] .page:nth-child(1),
-#select[style="--page:1"] .page:nth-child(2),
-#select[style="--page:2"] .page:nth-child(3),
-#select[style="--page:3"] .page:nth-child(4),
-#select[style="--page:4"] .page:nth-child(5),
-#select[style="--page:5"] .page:nth-child(6),
-#select[style="--page:6"] .page:nth-child(7),
-#select[style="--page:7"] .page:nth-child(8),
-#select[style="--page:8"] .page:nth-child(9),
-#select[style="--page:9"] .page:nth-child(10),
-#select[style="--page:10"] .page:nth-child(11),
-#select[style="--page:11"] .page:nth-child(12),
-#select[style="--page:12"] .page:nth-child(13),
-#select[style="--page:13"] .page:nth-child(14),
-#select[style="--page:14"] .page:nth-child(15),
-#select[style="--page:15"] .page:nth-child(16),
-#select[style="--page:16"] .page:nth-child(17),
-#select[style="--page:17"] .page:nth-child(18),
-#select[style="--page:18"] .page:nth-child(19),
-#select[style="--page:19"] .page:nth-child(19) {
+#select[style="--page:0;"] .page:nth-child(1),
+#select[style="--page:1;"] .page:nth-child(2),
+#select[style="--page:2;"] .page:nth-child(3),
+#select[style="--page:3;"] .page:nth-child(4),
+#select[style="--page:4;"] .page:nth-child(5),
+#select[style="--page:5;"] .page:nth-child(6),
+#select[style="--page:6;"] .page:nth-child(7),
+#select[style="--page:7;"] .page:nth-child(8),
+#select[style="--page:8;"] .page:nth-child(9),
+#select[style="--page:9;"] .page:nth-child(10),
+#select[style="--page:10;"] .page:nth-child(11),
+#select[style="--page:11;"] .page:nth-child(12),
+#select[style="--page:12;"] .page:nth-child(13),
+#select[style="--page:13;"] .page:nth-child(14),
+#select[style="--page:14;"] .page:nth-child(15),
+#select[style="--page:15;"] .page:nth-child(16),
+#select[style="--page:16;"] .page:nth-child(17),
+#select[style="--page:17;"] .page:nth-child(18),
+#select[style="--page:18;"] .page:nth-child(19),
+#select[style="--page:19;"] .page:nth-child(19) {
     opacity: 1;
     transform: scale(1);
 }
@@ -437,6 +423,12 @@ main > div > * {
     border-radius: 100%;
     color: white;
     font-size: 1.5em;
+    cursor: default;
+}
+
+#paging > div.active {
+    background: rgba(var(--color),1);
+    cursor: pointer;
 }
 
 #paging span {
