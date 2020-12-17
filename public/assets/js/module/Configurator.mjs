@@ -6,7 +6,7 @@ export { Modal, QoL };
 
 export class Configurator {
 
-	static selectedSVG = "<svg class='selected' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 168 165'><title>Remove product</title><path d='M607.62,303.22h151a7,7,0,0,1,7,7v148a7,7,0,0,1-7,7h-151a7,7,0,0,1-7-7v-148A7,7,0,0,1,607.62,303.22Z' transform='translate(-599.12 -301.72)'/><path d='M705.05,367.48h-7.66V360.4a4.71,4.71,0,0,0-4.72-4.71H673.81a4.71,4.71,0,0,0-4.72,4.71v7.08h-7.66a2.95,2.95,0,1,0,0,5.89h1.77v34.19a4.71,4.71,0,0,0,4.71,4.72h30.66a4.71,4.71,0,0,0,4.71-4.72V373.37h1.77a2.95,2.95,0,1,0,0-5.89Zm-13.56,0H675v-3.3a2.59,2.59,0,0,1,2.59-2.6H688.9a2.59,2.59,0,0,1,2.59,2.6v3.3ZM675,375.73V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Zm10.61,0V404a2.36,2.36,0,0,1-4.72,0v-28.3a2.36,2.36,0,0,1,4.72,0Zm10.61,0V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Z' transform='translate(-599.12 -301.72)'/></svg>";
+	static selectedHTML = "<svg class='selected' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 168 165'><title>Remove product</title><path d='M607.62,303.22h151a7,7,0,0,1,7,7v148a7,7,0,0,1-7,7h-151a7,7,0,0,1-7-7v-148A7,7,0,0,1,607.62,303.22Z' transform='translate(-599.12 -301.72)'/><path d='M705.05,367.48h-7.66V360.4a4.71,4.71,0,0,0-4.72-4.71H673.81a4.71,4.71,0,0,0-4.72,4.71v7.08h-7.66a2.95,2.95,0,1,0,0,5.89h1.77v34.19a4.71,4.71,0,0,0,4.71,4.72h30.66a4.71,4.71,0,0,0,4.71-4.72V373.37h1.77a2.95,2.95,0,1,0,0-5.89Zm-13.56,0H675v-3.3a2.59,2.59,0,0,1,2.59-2.6H688.9a2.59,2.59,0,0,1,2.59,2.6v3.3ZM675,375.73V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Zm10.61,0V404a2.36,2.36,0,0,1-4.72,0v-28.3a2.36,2.36,0,0,1,4.72,0Zm10.61,0V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Z' transform='translate(-599.12 -301.72)'/></svg>";
 
 	constructor(config) {
 		this.config = config;
@@ -67,9 +67,9 @@ export class Configurator {
 			// Create a new page
 			if(i % gridLength == 0) {
 				let page = document.createElement("div");
-				page.classList = "page";
-
 				let grid = document.createElement("div");
+
+				page.classList = "page";
 				grid.classList = "grid";
 
 				page.appendChild(grid);
@@ -89,9 +89,11 @@ export class Configurator {
 				item.setAttribute("data",Object.keys(this.config.products)[productID]);
 
 				let thumbnail = document.createElement("div");
+
 				thumbnail.style.setProperty("background-position-y",`calc(var(--sprite-thumbnail-height) * -${productID})`);
 				
 				item.appendChild(thumbnail);
+				item.insertAdjacentHTML("beforeend",Configurator.selectedHTML);
 				item.addEventListener("click",event => new ClickEvent(this.config).product(event),false);
 			}
 
