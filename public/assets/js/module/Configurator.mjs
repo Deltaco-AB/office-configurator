@@ -12,6 +12,7 @@ export class Configurator {
 		this.config = config;
 
 		this.active = {
+			categories: 0,
 			category: 0,
 			pages: 0,
 			page: 0
@@ -42,6 +43,8 @@ export class Configurator {
 
 		document.getElementById("select").style.setProperty("--page",index - 1);
 		document.getElementById("currentPage").innerText = index;
+
+		this.active.page = index;
 	}
 
 	category(index) {
@@ -63,6 +66,7 @@ export class Configurator {
 
 		QoL.removeChildren(wrapper);
 
+		// Populate pages with products
 		for(let i = 0;i < (pages * gridLength);i++) {
 			// Create a new page
 			if(i % gridLength == 0) {
@@ -148,9 +152,37 @@ export class Configurator {
 
 			config.categories[data.category].products.push(i);
 		}
+		
+		// Pagination buttons
+		const paging = document.getElementById("paging");
+
+		paging.firstElementChild.addEventListener("click",event => this.page(
+			new ClickEvent(this.active).prevPage(event)
+		));
+		paging.lastElementChild.addEventListener("click",event => this.page(
+			new ClickEvent(this.active).nextPage(event)
+		));
+
+		// Category buttons
+		const category = document.getElementById("category");
+
+		category.firstElementChild.addEventListener("click",event => this.category(
+			new ClickEvent(this.config).categories()
+		));
+		category.lastElementChild.addEventListener("click",event => {
+			const category = new ClickEvent(this.active).nextCategory();
+
+			if(category == "summary") {
+				this.summary();
+				return;
+			}
+
+			this.category(category);
+		});
+
+		this.active.categories = QoL.len(config.categories);
 
 		viewfinder(config.products);
-		
 		this.category(1);
 	}
 

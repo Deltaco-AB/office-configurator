@@ -31,3 +31,11 @@ export class QoL {
 	}
 
 }
+
+export class ProductMeta {
+
+	static hasMultipack(id) {
+
+	}
+
+}

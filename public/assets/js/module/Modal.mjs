@@ -45,3 +45,18 @@ export class Modal {
 	}
 
 }
+
+export class CategoriesModal {
+
+	constructor(config) {
+		this.categories = config.categories;
+		this.content = document.createElement("div");
+
+		this.create();
+	}
+
+	create() {
+		const wrapper = document.createElement("div");
+	}
+
+}
