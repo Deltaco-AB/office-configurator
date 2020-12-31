@@ -1,3 +1,11 @@
+// Dispatch a message event to parent window
+export function message(type,payload = null) {
+	if(payload) {
+		payload = `,"payload":"${payload}"`;
+	}
+	window.parent.postMessage(`{"type":"${type}"${payload}}`,window.parent.origin);
+}
+
 export class QoL {
 
 	// Return the length of a number, string, array or object
@@ -30,12 +38,11 @@ export class QoL {
 		}
 	}
 
-}
-
-export class ProductMeta {
-
-	static hasMultipack(id) {
-
+	static isActive(element) {
+		if(element.classList.contains("active")) {
+			return true;
+		}
+		return false;
 	}
 
 }

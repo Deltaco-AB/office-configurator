@@ -1,4 +1,4 @@
-import { Configurator, Modal, QoL } from "./module/Configurator.mjs";
+import { Main as Configurator, Modal, QoL } from "./module/Configurator.mjs";
 
 const searchParams = new URLSearchParams(window.location.search);
 const loadingScreen = new Modal("<img src='assets/img/loading.gif'/>");

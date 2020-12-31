@@ -264,7 +264,7 @@ main > div > * {
 
 #select {
     --page: 0; /* fallback */
-    --page-anim-speed: 400ms;
+    --page-anim-speed: 300ms;
     --page-offset: (100% / var(--page-count));
 
     transition: var(--page-anim-speed) transform;
@@ -426,6 +426,7 @@ main > div > * {
 
 #paging > div {
     --size: 50px;
+    transition: 300ms background;
     width: var(--size);
     height: var(--size);
     background: rgba(var(--color),.1);
@@ -503,6 +504,7 @@ main > div > * {
 
 .modal .header img {
     height: 50px;
+    margin-left: 25px;
     cursor: pointer;
 }
 

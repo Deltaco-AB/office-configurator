@@ -1,10 +1,10 @@
 import { QoL } from "./Extensions.mjs"; // Quality of Life monkey-functions
-import { EventHandler, ClickEvent } from "./Events.mjs";
+import { EventHandler } from "./Events.mjs";
 import { Modal } from "./Modal.mjs"; 
 
 export { Modal, QoL };
 
-export class Configurator {
+class Configurator {
 
 	static selectedHTML = "<svg class='selected' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 168 165'><title>Remove product</title><path d='M607.62,303.22h151a7,7,0,0,1,7,7v148a7,7,0,0,1-7,7h-151a7,7,0,0,1-7-7v-148A7,7,0,0,1,607.62,303.22Z' transform='translate(-599.12 -301.72)'/><path d='M705.05,367.48h-7.66V360.4a4.71,4.71,0,0,0-4.72-4.71H673.81a4.71,4.71,0,0,0-4.72,4.71v7.08h-7.66a2.95,2.95,0,1,0,0,5.89h1.77v34.19a4.71,4.71,0,0,0,4.71,4.72h30.66a4.71,4.71,0,0,0,4.71-4.72V373.37h1.77a2.95,2.95,0,1,0,0-5.89Zm-13.56,0H675v-3.3a2.59,2.59,0,0,1,2.59-2.6H688.9a2.59,2.59,0,0,1,2.59,2.6v3.3ZM675,375.73V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Zm10.61,0V404a2.36,2.36,0,0,1-4.72,0v-28.3a2.36,2.36,0,0,1,4.72,0Zm10.61,0V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Z' transform='translate(-599.12 -301.72)'/></svg>";
 
@@ -17,8 +17,6 @@ export class Configurator {
 			pages: 0,
 			page: 0
 		}
-		
-		this.init();
 	}
 
 	page(index) {
@@ -27,8 +25,8 @@ export class Configurator {
 		}
 
 		const paging = document.getElementById("paging");
-		const prev = paging.firstElementChild;
-		const next = paging.lastElementChild;
+		const prev = paging.firstElementChild; // Previous page button
+		const next = paging.lastElementChild; // Next page button
 
 		prev.classList.remove("active");
 		next.classList.remove("active");
@@ -98,7 +96,7 @@ export class Configurator {
 				
 				item.appendChild(thumbnail);
 				item.insertAdjacentHTML("beforeend",Configurator.selectedHTML);
-				item.addEventListener("click",event => new ClickEvent(this.config).product(event),false);
+				item.addEventListener("click",event => new EventHandler().product(event),false);
 			}
 
 			grid.appendChild(item);
@@ -109,6 +107,71 @@ export class Configurator {
 		this.page(1);
 	}
 
+}
+
+export class Main extends Configurator {
+
+	constructor(config) {
+		super(config);
+
+		this.init();
+	}
+
+	// Bind pagination event listeners
+	initPagination() {
+		const paging = document.getElementById("paging");
+
+		// Previous page button
+		paging.firstElementChild.addEventListener("click",event => {
+			if(QoL.isActive(event.target.closest(".pageButton"))) {
+				this.page(this.active.page - 1);
+			}
+		});
+		// Next page button
+		paging.lastElementChild.addEventListener("click",event => {
+			if(QoL.isActive(event.target.closest(".pageButton"))) {
+				this.page(this.active.page + 1);
+			}
+		});
+	}
+
+	// Bind category event listeners
+	initCategories() {
+		const category = document.getElementById("category");
+
+		category.firstElementChild.addEventListener("click",event => this.category(
+			new ClickEvent(this.config).categories()
+		));
+		// Next category button
+		category.lastElementChild.addEventListener("click",event => {
+			if(this.active.category == this.active.categories) {
+				// SUMMARY
+				return;
+			}
+
+			this.category(this.active.category + 1);
+		});
+	}
+
+	// Create viewfinder elements from config
+	initViewfinder() {
+		const viewfinder = document.getElementById("viewfinder");
+
+		QoL.removeChildren(viewfinder);
+
+		let i = 0;
+		for(const id in this.config.products) {
+			let element = document.createElement("div");
+
+			element.classList = "item";
+			element.style.setProperty("background-position-y",`calc(var(--sprite-viewfinder-height) * -${i})`);
+			element.setAttribute("data",id);
+
+			viewfinder.appendChild(element);
+			i++;
+		}
+	}
+
 	init() {
 		const config = this.config;
 
@@ -116,30 +179,14 @@ export class Configurator {
 			throw new Error("Config not supported by origin");
 		}
 
-		// Populate viewfinder with products
-		function viewfinder(products) {
-			const viewfinder = document.getElementById("viewfinder");
-
-			QoL.removeChildren(viewfinder);
-
-			let i = 0;
-			for(const id in products) {
-				let element = document.createElement("div");
-
-				element.classList = "item";
-				element.style.setProperty("background-position-y",`calc(var(--sprite-viewfinder-height) * -${i})`);
-				element.setAttribute("data",id);
-
-				viewfinder.appendChild(element);
-				i++;
-			}
-		}
-
 		document.getElementById("configName").innerText = config.defaultName;
 
-		// Prepare categories to receive products
-		for(const i in config.categories) {
-			config.categories[i].products = [];
+		for(const [id,data] of Object.entries(config.categories)) {
+			config.categories[id].products = []; // Prepare categories to receive products
+
+			if(data.startActive) {
+				this.active.categories++;
+			}
 		}
 
 		// Assign each product to its category by index in config
@@ -152,37 +199,12 @@ export class Configurator {
 
 			config.categories[data.category].products.push(i);
 		}
-		
-		// Pagination buttons
-		const paging = document.getElementById("paging");
 
-		paging.firstElementChild.addEventListener("click",event => this.page(
-			new ClickEvent(this.active).prevPage(event)
-		));
-		paging.lastElementChild.addEventListener("click",event => this.page(
-			new ClickEvent(this.active).nextPage(event)
-		));
+		this.initPagination();
+		this.initCategories();
+		this.initViewfinder();
 
-		// Category buttons
-		const category = document.getElementById("category");
-
-		category.firstElementChild.addEventListener("click",event => this.category(
-			new ClickEvent(this.config).categories()
-		));
-		category.lastElementChild.addEventListener("click",event => {
-			const category = new ClickEvent(this.active).nextCategory();
-
-			if(category == "summary") {
-				this.summary();
-				return;
-			}
-
-			this.category(category);
-		});
-
-		this.active.categories = QoL.len(config.categories);
-
-		viewfinder(config.products);
+		// Start the configurator
 		this.category(1);
 	}
 

@@ -4,6 +4,7 @@ export class Modal {
 
 	constructor(content,title = false) {
 		this.element = Modal.createDiv("modal center");
+		this.element.addEventListener("click",() => this.close());
 		this.element.close = () => this.close();
 
 		this.appendContent(content,title);
@@ -42,21 +43,6 @@ export class Modal {
 	close() {
 		this.element.classList.remove("active");
 		setTimeout(() => this.element.remove(),Modal.transitionDuration);
-	}
-
-}
-
-export class CategoriesModal {
-
-	constructor(config) {
-		this.categories = config.categories;
-		this.content = document.createElement("div");
-
-		this.create();
-	}
-
-	create() {
-		const wrapper = document.createElement("div");
 	}
 
 }
