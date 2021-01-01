@@ -4,7 +4,7 @@ export class Modal {
 
 	constructor(content,title = false) {
 		this.element = Modal.createDiv("modal center");
-		this.element.addEventListener("click",() => this.close());
+		this.element.addEventListener("click",(event) => this.close(event));
 		this.element.close = () => this.close();
 
 		this.appendContent(content,title);
@@ -40,7 +40,12 @@ export class Modal {
 		setTimeout(() => this.element.classList.add("active"),0);
 	}
 
-	close() {
+	close(event = false) {
+		// Don't close modals without a header (close button)
+		if(event && this.element.getElementsByClassName(".header") != undefined) {
+			return false;
+		}
+
 		this.element.classList.remove("active");
 		setTimeout(() => this.element.remove(),Modal.transitionDuration);
 	}

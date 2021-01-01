@@ -3,19 +3,19 @@
 	"categories": {
 		"1": {
 			"name": "Desktops",
-			"startActive": true
+			"enabled": true
 		},
 		"2": {
 			"name": "Ergonomics",
-			"startActive": true
+			"enabled": true
 		},
 		"3": {
 			"name": "Accessories",
-			"startActive": true
+			"enabled": true
 		},
 		"4": {
 			"name": "Accessories",
-			"startActive": false
+			"enabled": false
 		}
 	},
 	"products": {
@@ -30,7 +30,6 @@
 			"incompatible": [],
 			"add": [],
 			"flags": {
-				"startActive": true,
 				"outlined": true
 			}
 		},

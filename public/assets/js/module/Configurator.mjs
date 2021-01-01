@@ -11,12 +11,15 @@ class Configurator {
 	constructor(config) {
 		this.config = config;
 
+		// Current configurator states
 		this.active = {
 			categories: 0,
 			category: 0,
 			pages: 0,
 			page: 0
 		}
+
+		this.evt = new EventHandler(this.config,this.active);
 	}
 
 	page(index) {
@@ -96,7 +99,7 @@ class Configurator {
 				
 				item.appendChild(thumbnail);
 				item.insertAdjacentHTML("beforeend",Configurator.selectedHTML);
-				item.addEventListener("click",event => new EventHandler().product(event),false);
+				item.addEventListener("click",event => this.evt.product(event),false);
 			}
 
 			grid.appendChild(item);
@@ -114,7 +117,19 @@ export class Main extends Configurator {
 	constructor(config) {
 		super(config);
 
-		this.init();
+		if(this.config.origin && this.config.origin != window.top.origin) {
+			throw new Error("Config not supported by origin");
+		}
+
+		document.getElementById("configName").innerText = this.config.defaultName;
+
+		this.initProducts();
+		this.initPagination();
+		this.initCategories();
+		this.initViewfinder();
+
+		// Start the configurator
+		this.category(1);
 	}
 
 	// Bind pagination event listeners
@@ -167,45 +182,34 @@ export class Main extends Configurator {
 			element.style.setProperty("background-position-y",`calc(var(--sprite-viewfinder-height) * -${i})`);
 			element.setAttribute("data",id);
 
+			if(this.config.products[id].flags.outlined) {
+				element.classList.add("outlined");
+			}
+
 			viewfinder.appendChild(element);
 			i++;
 		}
 	}
 
-	init() {
-		const config = this.config;
+	initProducts() {
+		for(const [id,data] of Object.entries(this.config.categories)) {
+			this.config.categories[id].products = []; // Prepare categories to receive products
 
-		if(config.origin && config.origin != window.top.origin) {
-			throw new Error("Config not supported by origin");
-		}
-
-		document.getElementById("configName").innerText = config.defaultName;
-
-		for(const [id,data] of Object.entries(config.categories)) {
-			config.categories[id].products = []; // Prepare categories to receive products
-
-			if(data.startActive) {
+			if(data.enabled) {
 				this.active.categories++;
 			}
 		}
 
 		// Assign each product to its category by index in config
 		let i = -1;
-		for(const [id,data] of Object.entries(config.products)) {
+		for(const [id,data] of Object.entries(this.config.products)) {
 			i++;
 			if(data.category == 0) {
 				continue;
 			}
 
-			config.categories[data.category].products.push(i);
+			this.config.categories[data.category].products.push(i);
 		}
-
-		this.initPagination();
-		this.initCategories();
-		this.initViewfinder();
-
-		// Start the configurator
-		this.category(1);
 	}
 
 }

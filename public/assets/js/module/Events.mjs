@@ -2,8 +2,11 @@ export class EventHandler {
 
 	static localStorageObject = "deltaconfigUserConf";
 
-	constructor(config) {
+	constructor(config,active) {
 		this.config = config;
+		this.active = active;
+
+		this.selected = [];
 	}
 
 	static save(data) {
@@ -15,13 +18,19 @@ export class EventHandler {
 		return window.localStorage.getItem(EventHandler.localStorageObject);
 	}
 
-	getMultipack(id) {
-		return this.config.products[id].add;
-	}
-
 	// Add product to global configuration
 	addProduct(id) {
 		const elements = document.querySelectorAll(`[data='${id}']`);
+		const data = this.config.products[id];
+
+		// Remove incompatible products
+		data.incompatible.forEach(id => {
+			this.removeProduct(id);
+		});
+
+		if(data.flags.enableCategory) {
+			console.log(this.active.categories);
+		}
 
 		for(const element of elements) {
 			element.classList.add("selected");

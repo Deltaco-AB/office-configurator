@@ -198,6 +198,10 @@ main > div > * {
     opacity: 0;
 }
 
+#viewfinder .item.outlined {
+    opacity: .3;
+}
+
 #viewfinder .item.selected {
     opacity: 1;
 }
