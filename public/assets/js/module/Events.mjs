@@ -1,48 +1,51 @@
 export class EventHandler {
 
-	static localStorageObject = "deltaconfigUserConf";
-
 	constructor(config,active) {
 		this.config = config;
 		this.active = active;
 
-		this.selected = [];
+		this.selected = {};
 	}
 
-	static save(data) {
-		data += window.localStorage.getItem(EventHandler.localStorageObject);
-		window.localStorage.setItem(EventHandler.localStorageObject,data);
-	}
-
-	static load() {
-		return window.localStorage.getItem(EventHandler.localStorageObject);
-	}
-
-	// Add product to global configuration
+	// Add product to user configuration
 	addProduct(id) {
 		const elements = document.querySelectorAll(`[data='${id}']`);
 		const data = this.config.products[id];
 
 		// Remove incompatible products
 		data.incompatible.forEach(id => {
-			this.removeProduct(id);
+			this.removeProduct(id,false);
 		});
 
 		if(data.flags.enableCategory) {
-			console.log(this.active.categories);
+			this.config.categories[data.flags.enableCategory].enabled = true;
 		}
 
 		for(const element of elements) {
 			element.classList.add("selected");
 		}
+
+		// Add product ID and it's index (from current category config) to user configuration
+		this.selected[id] = this.config.categories[this.active.category].products[id] ?? null;
 	}
 
-	removeProduct(id) {
+	// Remove product from user configuration
+	removeProduct(id,recursive = true) {
 		const elements = document.querySelectorAll(`[data='${id}']`);
+		const data = this.config.products[id];
+
+		if(recursive) {
+			// Disable category
+			if(data.flags.enableCategory) {
+				this.config.categories[data.flags.enableCategory].enabled = false;
+			}
+		}
 
 		for(const element of elements) {
 			element.classList.remove("selected");
 		}
+
+		delete this.selected[id];
 	}
 
 	// Item grid template
@@ -56,6 +59,12 @@ export class EventHandler {
 		}
 
 		this.addProduct(id);
+	}
+
+	reset() {
+		for(const id in this.selected) {
+			this.removeProduct(id);
+		}
 	}
 
 }

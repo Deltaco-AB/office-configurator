@@ -503,13 +503,38 @@ main > div > * {
 .modal .header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: calc(var(--box-padding-inner) / 2);
+    margin-bottom: var(--box-padding-inner);
 }
 
-.modal .header img {
-    height: 50px;
+.modal .header * {
+    margin: 0;
+}
+
+.modal .header .close {
+    --size: 40px;
+    position: relative;
+    width: var(--size);
+    height: var(--size);
     margin-left: 25px;
     cursor: pointer;
+}
+
+.modal .header .close .line {
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    background: black; 
+    transform: rotate(45deg);
+}
+
+.modal .header .close .line:last-child {
+    transform: rotate(-45deg);
+}
+
+/* --- */
+
+.modal .categories ol {
+    list-style: none;
 }
 
 /* --- */

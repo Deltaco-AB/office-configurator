@@ -6,6 +6,7 @@ export function message(type,payload = null) {
 	window.parent.postMessage(`{"type":"${type}"${payload}}`,window.parent.origin);
 }
 
+// Quality of Life - Monkey-functions
 export class QoL {
 
 	// Return the length of a number, string, array or object

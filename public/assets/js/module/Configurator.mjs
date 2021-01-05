@@ -1,6 +1,6 @@
-import { QoL } from "./Extensions.mjs"; // Quality of Life monkey-functions
+import { QoL } from "./Extensions.mjs";
 import { EventHandler } from "./Events.mjs";
-import { Modal } from "./Modal.mjs"; 
+import { Modal, Categories } from "./Modal.mjs"; 
 
 export { Modal, QoL };
 
@@ -49,14 +49,12 @@ class Configurator {
 	}
 
 	category(index) {
-		const categories = this.config.categories;
-
-		if(!QoL.range(index,1,categories)) {
+		if(!QoL.range(index,1,this.config.categories)) {
 			throw new Error("Category index out of range");
 		}
 
 		const wrapper = document.getElementById("select");
-		const category = categories[index]; // Isolated object
+		const category = this.config.categories[index]; // Isolated object
 		
 		const gridLength = 4; // Number of items per page
 		
@@ -82,7 +80,7 @@ class Configurator {
 			}
 
 			const grid = wrapper.lastChild.lastChild; // #select .page .grid
-			const productID = category.products[i];
+			const productID = Object.values(category.products)[i];
 
 			// Create blank item
 			let item = document.createElement("div");
@@ -110,9 +108,14 @@ class Configurator {
 		this.page(1);
 	}
 
+	reset() {
+		this.evt.reset();
+		this.category(1);
+	}
+
 }
 
-export class Main extends Configurator {
+export class Init extends Configurator {
 
 	constructor(config) {
 		super(config);
@@ -121,12 +124,13 @@ export class Main extends Configurator {
 			throw new Error("Config not supported by origin");
 		}
 
-		document.getElementById("configName").innerText = this.config.defaultName;
+		//document.getElementById("configName").innerText = this.config.defaultName;
 
 		this.initProducts();
 		this.initPagination();
 		this.initCategories();
 		this.initViewfinder();
+		this.initActions();
 
 		// Start the configurator
 		this.category(1);
@@ -154,9 +158,8 @@ export class Main extends Configurator {
 	initCategories() {
 		const category = document.getElementById("category");
 
-		category.firstElementChild.addEventListener("click",event => this.category(
-			new ClickEvent(this.config).categories()
-		));
+		// All categories button
+		category.firstElementChild.addEventListener("click",() => new Categories(this.config.categories));
 		// Next category button
 		category.lastElementChild.addEventListener("click",event => {
 			if(this.active.category == this.active.categories) {
@@ -191,9 +194,10 @@ export class Main extends Configurator {
 		}
 	}
 
+	// Populate categories with products
 	initProducts() {
 		for(const [id,data] of Object.entries(this.config.categories)) {
-			this.config.categories[id].products = []; // Prepare categories to receive products
+			this.config.categories[id].products = {}; // Prepare categories to receive products
 
 			if(data.enabled) {
 				this.active.categories++;
@@ -208,8 +212,12 @@ export class Main extends Configurator {
 				continue;
 			}
 
-			this.config.categories[data.category].products.push(i);
+			this.config.categories[data.category].products[id] = i;
 		}
+	}
+
+	initActions() {
+		document.getElementById("configReset")?.addEventListener("click",() => this.reset()); // Reset button
 	}
 
 }

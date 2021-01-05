@@ -1,12 +1,13 @@
-import { Main as Configurator, Modal, QoL } from "./module/Configurator.mjs";
+import { Init as Configurator, Modal, QoL } from "./module/Configurator.mjs";
 
 const searchParams = new URLSearchParams(window.location.search);
-const loadingScreen = new Modal("<img src='assets/img/loading.gif'/>");
+const loadingScreen = new Modal();
+loadingScreen.open("<img src='assets/img/loading.gif'/>");
 
 // Prompt user to log in before initializing the configurator
 if(searchParams.has("loggedIn")) {
 	if(!QoL.coercive(searchParams.get("loggedIn"))) {
-		new Modal("<p>Please log in to use this configurator</p>");
+		new Modal().open("<p>Please log in to use this configurator</p>");
 	}
 }
 
