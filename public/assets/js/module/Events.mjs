@@ -1,3 +1,13 @@
+import { Categories, Summary } from "./Modal.mjs";
+
+// Dispatch a message event to parent window
+export function message(type,payload = null) {
+	if(payload) {
+		payload = `,"payload":"${payload}"`;
+	}
+	window.parent.postMessage(`{"type":"${type}"${payload}}`,window.parent.origin);
+}
+
 export class EventHandler {
 
 	constructor(config,active) {
@@ -19,13 +29,14 @@ export class EventHandler {
 
 		if(data.flags.enableCategory) {
 			this.config.categories[data.flags.enableCategory].enabled = true;
+			this.active.categories++;
 		}
 
 		for(const element of elements) {
 			element.classList.add("selected");
 		}
 
-		// Add product ID and it's index (from current category config) to user configuration
+		// Add product ID and its index (from current category config) to user configuration
 		this.selected[id] = this.config.categories[this.active.category].products[id] ?? null;
 	}
 
@@ -38,6 +49,14 @@ export class EventHandler {
 			// Disable category
 			if(data.flags.enableCategory) {
 				this.config.categories[data.flags.enableCategory].enabled = false;
+				this.active.categories -= 2;
+
+				// Remove all products from that category
+				for(const product in this.selected) {
+					if(this.config.products[product].category == data.flags.enableCategory) {
+						this.removeProduct(product,false);
+					}
+				}
 			}
 		}
 
@@ -48,8 +67,8 @@ export class EventHandler {
 		delete this.selected[id];
 	}
 
-	// Item grid template
-	product(event) {
+	// Toggle addProduct() and removeProduct()
+	toggleProduct(event) {
 		const target = event.target.closest("div[data]");
 		const id = target.getAttribute("data");
 
@@ -59,6 +78,28 @@ export class EventHandler {
 		}
 
 		this.addProduct(id);
+	}
+
+	// Open categories selector (Modal)
+	categories() {
+		new Categories(this.config.categories);
+		return true;
+	}
+
+	// Open summary (Modal)
+	summary() {
+		new Summary(this.selected,this.config.products);
+		return true;
+	}
+
+	// Add selected items to viewfinder (reconstruct)
+	sync(products) {
+		for(const product in products) {
+			if(this.selected[product]) {
+				this.addProduct(product);
+				continue;
+			}
+		}
 	}
 
 	reset() {

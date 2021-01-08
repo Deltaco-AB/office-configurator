@@ -1,13 +1,5 @@
-// Dispatch a message event to parent window
-export function message(type,payload = null) {
-	if(payload) {
-		payload = `,"payload":"${payload}"`;
-	}
-	window.parent.postMessage(`{"type":"${type}"${payload}}`,window.parent.origin);
-}
-
 // Quality of Life - Monkey-functions
-export class QoL {
+export class FunctionExtended {
 
 	// Return the length of a number, string, array or object
 	static len(value) {
@@ -16,6 +8,10 @@ export class QoL {
 
 	// Test if number, array or object length is within range
 	static range(value,min,max = min) {
+		if(value === undefined || min === undefined) {
+			console.warn("Received invalid values",[value,min,max]);
+			return false;
+		}
 		value = Object.keys(value).length || value;
 		min = Object.keys(min).length || min;
 		max = Object.keys(max).length || max;

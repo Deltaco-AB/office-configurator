@@ -28,7 +28,9 @@
 		"DELO-0100": {
 			"category": 1,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"DELO-0100"
+			],
 			"flags": {
 				"outlined": true
 			}

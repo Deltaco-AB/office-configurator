@@ -77,7 +77,62 @@ export class Modal {
 		}
 		
 		this.wrapper.classList.remove("active");
-		setTimeout(() => this.wrapper.remove(),Modal.transitionDuration);
+		setTimeout(() => this.wrapper.remove(), Modal.transitionDuration);
+	}
+
+}
+
+export class Summary extends Modal {
+
+	constructor(selected,products) {
+		super("Summary");
+
+		if(Object.keys(selected).length === 0) {
+			this.open("<h2>Your configuration is empty</h2><p>Select at least one product to proceed</p>");
+			return;
+		}
+
+		this.inner.classList.add("summary");
+		this.products = products;
+
+		this.appendProducts(selected);
+
+		this.open();
+	}
+
+	createListItem(icon,text,id) {
+		function textElement(text) {
+			let element = document.createElement("p");
+			element.innerText = text;
+
+			return element;
+		}
+
+		let item = Modal.createDiv("item center");
+		item.setAttribute("data",id);
+
+		item.appendChild(textElement(icon));
+		item.appendChild(textElement(text));
+
+		return item;
+	}
+
+	appendProducts(selected) {
+		let list = Modal.createDiv("list");
+
+		for(const [id,index] of Object.entries(selected)) {
+			let data = this.products[id];
+
+			if(data.add.length === 0) {
+				data.add[0] = id;
+			}
+
+			data.add.forEach(id => {
+				list.appendChild(this.createListItem(id,index));
+			});
+		}
+
+		this.append(list);
 	}
 
 }
@@ -89,13 +144,35 @@ export class Categories extends Modal {
 		this.inner.classList.add("categories");
 
 		this.appendCategories(categories);
+		this.appendSummary();
+		this.bind();
 
 		this.open();
 	}
 
-	appendCategories(categories) {
-		let list = Modal.createDiv("list");
+	click(event) {
+		const target = event.target.closest(".item") ?? false;
+		if(!target) {
+			return false;
+		}
 
+		let value = parseInt(target.getAttribute("data"));
+
+		if(value === 0) {
+			value = "summary";
+		}
+
+		window._configCategory(value);
+		this.close();
+	}
+
+	bind() {
+		this.inner.addEventListener("click",event => this.click(event));
+	}
+
+	// ----
+
+	createListItem(icon,text,id) {
 		function textElement(text) {
 			let element = document.createElement("p");
 			element.innerText = text;
@@ -103,23 +180,35 @@ export class Categories extends Modal {
 			return element;
 		}
 
+		let item = Modal.createDiv("item center");
+		item.setAttribute("data",id);
+
+		item.appendChild(textElement(icon));
+		item.appendChild(textElement(text));
+
+		return item;
+	}
+
+	appendCategories(categories) {
+		let list = Modal.createDiv("list");
+
 		let i = 1;
 		for(let [id,data] of Object.entries(categories)) {
 			if(!data.enabled) {
 				continue;
 			}
 
-			let item = Modal.createDiv("center");
-			item.setAttribute("data",id);
-
-			item.appendChild(textElement(i));
-			item.appendChild(textElement(data.name));
-
-			list.appendChild(item);
+			list.appendChild(this.createListItem(i,data.name,id));
 			i++;
 		}
 
 		this.append(list);
+	}
+
+	appendSummary() {
+		const list = this.inner.getElementsByClassName("list")[0];
+
+		list.appendChild(this.createListItem("i","Summary",0));
 	}
 
 }

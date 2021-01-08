@@ -1,8 +1,8 @@
-import { QoL } from "./Extensions.mjs";
+import { FunctionExtended } from "./Extensions.mjs";
 import { EventHandler } from "./Events.mjs";
-import { Modal, Categories } from "./Modal.mjs"; 
+import { Modal } from "./Modal.mjs"; 
 
-export { Modal, QoL };
+export { Modal, FunctionExtended };
 
 class Configurator {
 
@@ -23,7 +23,7 @@ class Configurator {
 	}
 
 	page(index) {
-		if(!QoL.range(index,1,this.active.pages)) {
+		if(!FunctionExtended.range(index,1,this.active.pages)) {
 			throw new Error("Page index out of range");
 		}
 
@@ -49,7 +49,12 @@ class Configurator {
 	}
 
 	category(index) {
-		if(!QoL.range(index,1,this.config.categories)) {
+		if(index === "summary") {
+			this.evt.summary();
+			return;
+		}
+
+		if(!FunctionExtended.range(index,1,this.config.categories)) {
 			throw new Error("Category index out of range");
 		}
 
@@ -59,11 +64,11 @@ class Configurator {
 		const gridLength = 4; // Number of items per page
 		
 		// Number of pages
-		const pages = Math.ceil(QoL.len(category.products) / gridLength);
+		const pages = Math.ceil(FunctionExtended.len(category.products) / gridLength);
 		document.getElementById("configure").style.setProperty("--page-count",pages);
 		document.getElementById("totalPages").innerText = pages;
 
-		QoL.removeChildren(wrapper);
+		FunctionExtended.removeChildren(wrapper);
 
 		// Populate pages with products
 		for(let i = 0;i < (pages * gridLength);i++) {
@@ -97,7 +102,7 @@ class Configurator {
 				
 				item.appendChild(thumbnail);
 				item.insertAdjacentHTML("beforeend",Configurator.selectedHTML);
-				item.addEventListener("click",event => this.evt.product(event),false);
+				item.addEventListener("click",event => this.evt.toggleProduct(event),false);
 			}
 
 			grid.appendChild(item);
@@ -106,6 +111,7 @@ class Configurator {
 		this.active.category = index;
 		this.active.pages = pages;
 		this.page(1);
+		this.evt.sync(category.products);
 	}
 
 	reset() {
@@ -142,13 +148,13 @@ export class Init extends Configurator {
 
 		// Previous page button
 		paging.firstElementChild.addEventListener("click",event => {
-			if(QoL.isActive(event.target.closest(".pageButton"))) {
+			if(FunctionExtended.isActive(event.target.closest(".pageButton"))) {
 				this.page(this.active.page - 1);
 			}
 		});
 		// Next page button
 		paging.lastElementChild.addEventListener("click",event => {
-			if(QoL.isActive(event.target.closest(".pageButton"))) {
+			if(FunctionExtended.isActive(event.target.closest(".pageButton"))) {
 				this.page(this.active.page + 1);
 			}
 		});
@@ -158,12 +164,16 @@ export class Init extends Configurator {
 	initCategories() {
 		const category = document.getElementById("category");
 
+		// Category interface
+		window._configCategory = (category) => this.category(category);
+
 		// All categories button
-		category.firstElementChild.addEventListener("click",() => new Categories(this.config.categories));
+		category.firstElementChild.addEventListener("click",() => this.evt.categories());
+
 		// Next category button
 		category.lastElementChild.addEventListener("click",event => {
 			if(this.active.category == this.active.categories) {
-				// SUMMARY
+				this.evt.summary();
 				return;
 			}
 
@@ -175,7 +185,7 @@ export class Init extends Configurator {
 	initViewfinder() {
 		const viewfinder = document.getElementById("viewfinder");
 
-		QoL.removeChildren(viewfinder);
+		FunctionExtended.removeChildren(viewfinder);
 
 		let i = 0;
 		for(const id in this.config.products) {
