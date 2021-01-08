@@ -172,7 +172,7 @@ export class Init extends Configurator {
 
 		// Next category button
 		category.lastElementChild.addEventListener("click",event => {
-			if(this.active.category == this.active.categories) {
+			if(this.active.category >= this.active.categories) {
 				this.evt.summary();
 				return;
 			}

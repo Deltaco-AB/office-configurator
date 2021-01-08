@@ -23,6 +23,13 @@ export class Modal {
 		return element;
 	}
 
+	static textElement(text) {
+		let element = document.createElement("p");
+		element.innerText = text;
+
+		return element;
+	}
+
 	// Add modal content from node or HTML
 	append(content) {
 		content = content.outerHTML ?? content;
@@ -96,29 +103,71 @@ export class Summary extends Modal {
 		this.products = products;
 
 		this.appendProducts(selected);
+		this.appendCheckout();
+		this.bind();
 
 		this.open();
 	}
 
-	createListItem(icon,text,id) {
-		function textElement(text) {
-			let element = document.createElement("p");
-			element.innerText = text;
+	static inputElement(data) {
+		const element = document.createElement("input");
+		element.setAttribute("data",data);
+		element.setAttribute("type","number");
+		element.setAttribute("min","0");
+		element.setAttribute("value","1");
+
+		return element;
+	}
+
+	/* ---- */
+
+	change(event) {
+		const target = event.target?.getAttribute("data") ?? false;
+
+		if(target === "bulk") {
+			const elements = this.inner.getElementsByTagName("input");
+
+			for(let element of elements) {
+				element.setAttribute("value",event.target.value);
+			}
+		}
+
+		return false;
+	}
+
+	bind() {
+		this.inner.addEventListener("change",event => this.change(event));
+	}
+
+	// ----
+
+	createListItem(index,text,data) {
+		function spriteElement(index) {
+			let element = document.createElement("div");
+			element.classList.add("img");
+			element.style.setProperty("background-position-y",`calc(var(--sprite-thumbnail-height) * -${index})`);
 
 			return element;
 		}
 
 		let item = Modal.createDiv("item center");
-		item.setAttribute("data",id);
+		item.setAttribute("data",data);
 
-		item.appendChild(textElement(icon));
-		item.appendChild(textElement(text));
+		item.appendChild(spriteElement(index));
+		item.appendChild(Modal.textElement(text));
+		item.appendChild(Summary.inputElement(data));
 
 		return item;
 	}
 
 	appendProducts(selected) {
-		let list = Modal.createDiv("list");
+		const list = Modal.createDiv("list");
+
+		const bulk = Modal.createDiv("bulk center");
+		bulk.appendChild(Modal.textElement("Buy your configuration in bulk:"));
+		bulk.appendChild(Summary.inputElement("bulk"));
+
+		this.append(bulk);
 
 		for(const [id,index] of Object.entries(selected)) {
 			let data = this.products[id];
@@ -127,12 +176,19 @@ export class Summary extends Modal {
 				data.add[0] = id;
 			}
 
-			data.add.forEach(id => {
-				list.appendChild(this.createListItem(id,index));
+			data.add.forEach(value => {
+				list.appendChild(this.createListItem(index,id,value));
 			});
 		}
 
 		this.append(list);
+	}
+
+	appendCheckout() {
+		const button = Modal.createDiv("button");
+		button.innerText = "Add to Cart";
+
+		this.append(button);
 	}
 
 }
@@ -173,18 +229,11 @@ export class Categories extends Modal {
 	// ----
 
 	createListItem(icon,text,id) {
-		function textElement(text) {
-			let element = document.createElement("p");
-			element.innerText = text;
-
-			return element;
-		}
-
 		let item = Modal.createDiv("item center");
 		item.setAttribute("data",id);
 
-		item.appendChild(textElement(icon));
-		item.appendChild(textElement(text));
+		item.appendChild(Modal.textElement(icon));
+		item.appendChild(Modal.textElement(text));
 
 		return item;
 	}

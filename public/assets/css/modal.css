@@ -1,5 +1,6 @@
 .modal {
     --transition-duration: 300ms;
+    --border-radius: 6px;
     
     transition: var(--transition-duration) opacity;
     position: fixed;
@@ -20,7 +21,7 @@
     transition: var(--transition-duration) transform;
     position: absolute;
     box-sizing: border-box;
-    max-height: 70%;
+    max-height: 90%;
     padding: var(--box-padding-inner);
     background: rgb(var(--color-text));
     border-radius: 20px;
@@ -114,23 +115,33 @@
 /* -- Bulk -- */
 
 .modal input[type="number"] {
-    height: 50%;
-    width: 60px;
+    height: 40px;
+    width: 50px;
     background: rgba(var(--color),.1);
-    padding-left: 10px;
+    padding: 5px 15px 5px 15px;
     margin-left: auto;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     font-size: 1.2em;
+}
+
+.modal input[type="number"]::-webkit-inner-spin-button, 
+.modal input[type="number"]::-webkit-outer-spin-button {  
+   opacity: 1;
+}
+
+.modal input[type="number"]::selection {
+    color: rgb(var(--color-text));
+    background: rgb(var(--color-accent));
 }
 
 .modal .bulk {
     --background-color: transparent;
     position: relative;
     box-sizing: border-box;
-    padding: 0 var(--box-padding-inner) 0 var(--box-padding-inner);
+    padding: 0  var(--box-padding-inner) 0 var(--box-padding-inner);
     background: var(--background-color);
-    border-radius: 6px;
+    border-radius: var(--border-radius);
 }
 
 .modal .bulk p {
@@ -139,17 +150,17 @@
 
 .modal .summary {
     --pseudo-height: 46px;
-    --background-color: rgba(var(--color),.03);
+    --background-color: rgb(var(--color-text));
     width: 500px;
     position: relative;
     box-sizing: border-box;
     padding: var(--box-padding-inner);
     background: var(--background-color);
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     margin-bottom: var(--pseudo-height);
 }
 
-.modal .summary::after {
+/* .modal .summary::after {
     content: " ";
     display: block;
     position: absolute;
@@ -160,11 +171,26 @@
     background: -webkit-linear-gradient(rgb(var(--color-text)) 0%, transparent 0%), -webkit-linear-gradient(135deg, rgb(var(--color-text)) 33.33%, transparent 33.33%) 0 0%, rgb(var(--color-text)) -webkit-linear-gradient(45deg, rgb(var(--color-text)) 33.33%, var(--background-color) 33.33%) 0 0%;
     background-repeat: repeat-x;
     background-size: 0px 100%, 9px 27px, 9px 27px;
+} */
+
+.modal .summary > * {
+    margin-bottom: var(--box-padding-inner);
+}
+
+.modal .summary > *:last-child {
+    margin-bottom: unset;
+}
+
+.modal .summary .list {
+    padding: 15px 25px 15px 25px;
+    background: rgba(var(--color),.03);
+    border-radius: var(--border-radius);
 }
 
 .modal .item {
     --sprite-thumbnail-width: 85px;
     --sprite-thumbnail-height: 85px;
+    width: 100%;
     height: var(--sprite-thumbnail-height);
 	justify-content: flex-start;
 	padding-top: calc(var(--box-padding-inner) / 2);
@@ -188,4 +214,8 @@
     background-position-y: calc(var(--sprite-thumbnail-height) * -0);
     width: var(--sprite-thumbnail-width);
     height: var(--sprite-thumbnail-height);
+}
+
+.modal .button {
+    padding: 20px;
 }
