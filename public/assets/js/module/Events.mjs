@@ -2,10 +2,8 @@ import { Categories, Summary } from "./Modal.mjs";
 
 // Dispatch a message event to parent window
 export function message(type,payload = null) {
-	if(payload) {
-		payload = `,"payload":"${payload}"`;
-	}
-	window.parent.postMessage(`{"type":"${type}"${payload}}`,window.parent.origin);
+	payload = JSON.stringify(payload);
+	window.parent.postMessage(`{"type":"${type}","payload":"${payload}"}`,window.parent.origin);
 }
 
 export class EventHandler {
@@ -38,6 +36,7 @@ export class EventHandler {
 
 		// Add product ID and its index (from current category config) to user configuration
 		this.selected[id] = this.config.categories[this.active.category].products[id] ?? null;
+		message("productAdded",id);
 	}
 
 	// Remove product from user configuration
@@ -65,6 +64,7 @@ export class EventHandler {
 		}
 
 		delete this.selected[id];
+		message("productRemoved",id);
 	}
 
 	// Toggle addProduct() and removeProduct()

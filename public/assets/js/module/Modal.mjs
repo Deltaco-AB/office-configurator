@@ -1,3 +1,5 @@
+import { message } from "./Events.mjs";
+
 export class Modal {
 
 	static transitionDuration = 300;
@@ -122,9 +124,10 @@ export class Summary extends Modal {
 	/* ---- */
 
 	change(event) {
-		const target = event.target?.getAttribute("data") ?? false;
+		const parent = event.target.closest(".item");
+		const id = event.target?.getAttribute("data") ?? false;
 
-		if(target === "bulk") {
+		if(id === "bulk") {
 			const elements = this.inner.getElementsByTagName("input");
 
 			for(let element of elements) {
@@ -132,11 +135,100 @@ export class Summary extends Modal {
 			}
 		}
 
+		parent.classList.remove("remove");
+
+		// Don't add products with a zero or negative quantity
+		if(event.target.value < 1) {
+			parent.classList.add("remove");
+		}
+
 		return false;
+	}
+
+	addToCart() {
+		return new Promise((resolve,reject) => {
+			const items = this.inner.getElementsByClassName("item");
+
+			let payload = {};
+	
+			// Add products from summary list
+			for(const item of items) {
+				const multipack = item.getAttribute("multipack") || false;
+				let id = item.getAttribute("data");
+				
+				let quantity = null;
+				let getQuantity = (item) => {
+					return parseInt(item.lastElementChild.value);
+				};
+	
+				// Inherit quantity from anchor (multipack attribute)
+				if(multipack) {
+					const anchor = this.inner.querySelector(`div[data='${multipack}']`);
+					quantity = getQuantity(anchor);
+				} else {
+					quantity = getQuantity(item);
+				}
+				
+				if(quantity > 0) {
+					payload[id] = quantity;
+				}
+			}
+			
+			// Configuration is empty
+			if(Object.keys(payload).length <= 0) {
+				reject(400);
+			}
+
+			message("cart",payload);
+			resolve(200);
+		});
+	}
+
+	// Add to cart initializer
+	async click(event) {
+		const target = event.target.closest("div[data='addtocart']") ?? false;
+
+		if(!target) {
+			return;
+		}
+
+		target.classList.add("disabled");
+		target.innerText = "Adding to cart..";
+
+		await this.addToCart().then(response => {
+			target.classList.remove("disabled");
+			target.innerText = "Add to cart";
+
+			const button = Modal.createDiv("button");
+			button.innerText = "New configuration";
+			button.setAttribute("onclick","window._configReset()");
+			
+			const success = new Modal("Thank you!");
+			success.append("<p style='text-align:center;'>Your configuration has been added to the shopping cart.</p><p>You can close the configurator now or start over with a new configuration.</p>");
+			success.append(button);
+			success.open();
+		})
+		.catch(error => {
+			if(error == 400) {
+				// Empty configuration
+				this.close();
+				return new Summary({});
+			}
+
+			// Unexpected error
+
+			target.classList.remove("disabled");
+			target.innerText = "Add to cart";
+
+			new Modal("Error").open(`<p>Error: ${error}.</p><p>Please report this issue if the problem presists</p>`);
+
+			throw error;
+		});
 	}
 
 	bind() {
 		this.inner.addEventListener("change",event => this.change(event));
+		this.inner.addEventListener("click",event => this.click(event));
 	}
 
 	// ----
@@ -152,6 +244,13 @@ export class Summary extends Modal {
 
 		let item = Modal.createDiv("item center");
 		item.setAttribute("data",data);
+
+		// Treat item as multipack if index is false
+		if(index === false) {
+			item.appendChild(Modal.textElement(text));
+
+			return item;
+		}
 
 		item.appendChild(spriteElement(index));
 		item.appendChild(Modal.textElement(text));
@@ -171,14 +270,23 @@ export class Summary extends Modal {
 
 		for(const [id,index] of Object.entries(selected)) {
 			let data = this.products[id];
+			let value = data.add.length > 0 ? data.add[0] : id;
 
-			if(data.add.length === 0) {
-				data.add[0] = id;
+			let item = this.createListItem(index,id,value);
+			list.appendChild(item);
+			
+			// Add multipack products if array length is > 0
+			if(data.add.length > 0) {
+				data.add.slice(1).forEach(pointer => {
+					const data = this.products[pointer];
+					const value = data.add.length > 0 ? data.add[0] : pointer;
+
+					let item = this.createListItem(false,pointer,value);
+					item.setAttribute("multipack",id);
+
+					list.appendChild(item);
+				});
 			}
-
-			data.add.forEach(value => {
-				list.appendChild(this.createListItem(index,id,value));
-			});
 		}
 
 		this.append(list);
@@ -186,6 +294,7 @@ export class Summary extends Modal {
 
 	appendCheckout() {
 		const button = Modal.createDiv("button");
+		button.setAttribute("data","addtocart");
 		button.innerText = "Add to Cart";
 
 		this.append(button);

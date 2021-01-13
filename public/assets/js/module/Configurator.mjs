@@ -115,8 +115,22 @@ class Configurator {
 	}
 
 	reset() {
-		this.evt.reset();
+		this.evt.reset(); // Clear selected products
+
+		// Reset enabled categories
+		this.active.categories = 0;
+		for(const category of Object.values(this.config.categories)) {
+			if(category.enabled) {
+				this.active.categories++;
+			}
+		}
 		this.category(1);
+
+		// Close all modals
+		const modals = document.getElementsByClassName("modal");
+		for(const modal of modals) {
+			modal.close();
+		}
 	}
 
 }
@@ -227,6 +241,7 @@ export class Init extends Configurator {
 	}
 
 	initActions() {
+		window._configReset = () => this.reset(); // Reset interface
 		document.getElementById("configReset")?.addEventListener("click",() => this.reset()); // Reset button
 	}
 

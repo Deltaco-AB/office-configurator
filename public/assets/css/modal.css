@@ -201,6 +201,35 @@
     border-top: solid 2px rgba(var(--color),.05);
 }
 
+.modal .item.remove > p,
+.modal .item.remove + .item[multipack] > p {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    opacity: .5;
+}
+
+.modal .item.remove .img {
+    opacity: .3;
+}
+
+.modal .item[multipack] {
+    height: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: rgba(var(--color),.1);
+    border-radius: 100px;
+}
+
+.modal .item[multipack] + .item[multipack] {
+    margin-top: unset;
+}
+
+.modal .item[multipack] p::before {
+    content: "+";
+    margin-right: 10px;
+    opacity: .5;
+}
+
 .modal .item p {
     margin-left: var(--box-padding-inner);
     font-size: 1.2em;
@@ -218,4 +247,9 @@
 
 .modal .button {
     padding: 20px;
+}
+
+.modal .button.disabled {
+    pointer-events: none;
+    background: rgba(var(--color),.3);
 }
