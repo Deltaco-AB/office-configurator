@@ -121,3 +121,128 @@ Make the configurator display a message if the user isn't logged in on your webs
  <iframe id="officeConfigurator" style="width:1200px;height:800px" src="https://app.cloud.deltaco.eu/office-configurator/v2/?loggedIn=true"></iframe>
 ```
 2. Flip the value when the login state changes to toggle the message.
+
+# MessageEvent semantics
+
+The configurator uses [`MessageEvents`](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent) to communicate with its parent window and vice versa.
+
+The arbitrary protocol for bidirectional messages consists of a JSON-encoded `type` and optional `payload` string.
+
+```json
+{
+ "type": "foo",
+ "payload": "bar"
+}
+```
+
+#### Outputs
+|`type`|Description|
+|--|--|
+|[`ready`](#event-type-ready)|The configurator is ready to accept messages|
+|[`cart`](#event-type-cart)|User-submitted configuration|
+|[`addedProduct`](#event-type-addedproduct)|Product has been added to configuration|
+|[`removedProduct`](#event-type-removedproduct)|Product has been removed from configuration|
+
+#### Inputs
+|`type`|Description|
+|--|--|
+|[`config`](#event-type-config)|Serlialized custom `config.json`|
+
+## Event type: `ready`
+
+Dispatched when the configurator has loaded all necessary assets to accept [incomming messages](#inputs)
+
+This event should be listened for if you intend to use a [Filtered configurator](#filtered-configurator)
+
+```js
+{
+ type: "ready",
+ payload: null
+}
+```
+
+## Event type: `cart`
+
+Dispatched by the configurator when the user has added their configuration to the shopping cart.
+
+```js
+{
+ type: "cart",
+ payload: {
+  // EAN-13 code : quantity
+  7333048043504: 1,
+  7333048043528: 4,
+  7333048043610: 1
+ }
+}
+```
+
+## Event type: `addedProduct`
+
+Dispatched by the configurator when a product is added to the configuration. This includes all instances where a product is added, not necessarily a direct user triggered action (multipacked- and featured products etc.)
+
+```js
+{
+ type: "addedProduct",
+ payload: "7333048043504" // EAN-13 code
+}
+```
+
+## Event type: `removedProduct`
+
+Dispatched by the configurator when a product is removed from the configuration. This includes all instances where a product is removed, not necessarily a direct user triggered action (multipacked- and featured products etc.)
+
+```js
+{
+ type: "removedProduct",
+ payload: "7333048043504" // EAN-13 code
+}
+```
+
+## Event type: `config`
+
+Dispatched by the parent window to initialize the configurator with a custom [`config.json`](#filtered-configurator).
+
+Example using [`postMessage(message, transferLis)`](https://developer.mozilla.org/en-US/docs/Web/API/MessagePort/postMessage):
+```js
+const config = '{
+ "type": "config",
+ "payload": "..." // config.json 
+}';
+
+const frame = contentWindow; // Configurator frame*
+
+frame.postMessage(config,frame.origin);
+```
+
+\* See: [`HTMLIFrameElement.contentWindow`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLIFrameElement/contentWindow)
+
+# Compatability
+
+It's possible to upgrade from version 1.3 to 2.0 without making any major changes to your existing code. You need to filter out any `event.data.type` that isn't `cart` - as that's the only MessageEvent implemented in 1.3.
+
+If you didn't modify the `if` statement when implementing 1.3 from the [1.3 README](https://github.com/Deltaco-AB/office-configurator/blob/1c95d8a241271d209acbf3514c1a2018d7369f17/README.md); you already have this check in place.
+```js
+if(event.origin !== "https://app.cloud.deltaco.eu" || event.data.type != "cart") {
+ return;
+}
+```
+
+#### Endpoint:
+To ensure backwards compatability, the base path will remain on version 1.3 until EOL @ **01/Jan/2022**
+
+|URL path|Version|
+|--|--|
+|`/office-configurator/`|1.3|
+|`/office-configurator/v1/`|1.3|
+|`/office-configurator/v1.3/`|1.3|
+|`/office-configurator/v2/`|2.0|
+|`/office-configurator/v2.0/`|2.0|
+
+# License
+
+Deltaco-AB/office-configurator is licensed under the [MIT License](https://github.com/Deltaco-AB/office-configurator/blob/master/LICENSE).
+
+# Report issues & suggest features
+
+Please report bugs and suggest new features by creating an [Issue](https://github.com/Deltaco-AB/office-configurator/issues)
