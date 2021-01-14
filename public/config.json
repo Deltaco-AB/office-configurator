@@ -21,14 +21,16 @@
 		"DELO-0201": {
 			"category": 3,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048043566"
+			],
 			"flags": {}
 		},
 		"DELO-0100": {
 			"category": 1,
 			"incompatible": [],
 			"add": [
-				"DELO-0100"
+				"7333048043450"
 			],
 			"flags": {
 				"outlined": true
@@ -37,7 +39,9 @@
 		"DELC-0100": {
 			"category": 3,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048042460"
+			],
 			"flags": {}
 		},
 		"DELO-0150": {
@@ -45,13 +49,17 @@
 			"incompatible": [
 				"DELO-0153"
 			],
-			"add": [],
+			"add": [
+				"7333048043467"
+			],
 			"flags": {}
 		},
 		"DELO-0151": {
 			"category": 0,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048043474"
+			],
 			"flags": {}
 		},
 		"DELO-0152": {
@@ -60,7 +68,7 @@
 				"DELO-0153"
 			],
 			"add": [
-				"DELO-0152",
+				"7333048043481",
 				"DELO-0151"
 			],
 			"flags": {
@@ -74,7 +82,7 @@
 				"DELO-0152"
 			],
 			"add": [
-				"DELO-0153",
+				"7333048043498",
 				"DELO-0151"
 			],
 			"flags": {
@@ -84,43 +92,57 @@
 		"DELO-0155": {
 			"category": 4,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048043511"
+			],
 			"flags": {}
 		},
 		"DELO-0154": {
 			"category": 4,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048043504"
+			],
 			"flags": {}
 		},
 		"DELO-0156": {
 			"category": 4,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048043528"
+			],
 			"flags": {}
 		},
 		"DELO-0157": {
 			"category": 4,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048043535"
+			],
 			"flags": {}
 		},
 		"DELO-0158": {
 			"category": 4,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048043542"
+			],
 			"flags": {}
 		},
 		"DELO-0200": {
 			"category": 3,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048043559"
+			],
 			"flags": {}
 		},
 		"DELO-0202": {
 			"category": 3,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048043573"
+			],
 			"flags": {}
 		},
 		"DELO-0301": {
@@ -129,7 +151,9 @@
 				"DELO-0300",
 				"DELO-0302"
 			],
-			"add": [],
+			"add": [
+				"7333048043597"
+			],
 			"flags": {}
 		},
 		"DELO-0203": {
@@ -137,7 +161,9 @@
 			"incompatible": [
 				"DELO-0204"
 			],
-			"add": [],
+			"add": [
+				"7333048043672"
+			],
 			"flags": {}
 		},
 		"DELO-0204": {
@@ -145,7 +171,9 @@
 			"incompatible": [
 				"DELO-0203"
 			],
-			"add": [],
+			"add": [
+				"7333048043689"
+			],
 			"flags": {}
 		},
 		"DELO-0300": {
@@ -154,7 +182,9 @@
 				"DELO-0301",
 				"DELO-0302"
 			],
-			"add": [],
+			"add": [
+				"7333048043580"
+			],
 			"flags": {}
 		},
 		"DELO-0302": {
@@ -172,13 +202,17 @@
 			"incompatible": [
 				"DELO-0302"
 			],
-			"add": [],
+			"add": [
+				"7333048043603"
+			],
 			"flags": {}
 		},
 		"DELO-0402": {
 			"category": 3,
 			"incompatible": [],
-			"add": [],
+			"add": [
+				"7333048044150"
+			],
 			"flags": {}
 		}
 	}

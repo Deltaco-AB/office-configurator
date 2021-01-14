@@ -3,7 +3,7 @@ import { Categories, Summary } from "./Modal.mjs";
 // Dispatch a message event to parent window
 export function message(type,payload = null) {
 	payload = JSON.stringify(payload);
-	window.parent.postMessage(`{"type":"${type}","payload":"${payload}"}`,window.parent.origin);
+	window.parent.postMessage(`{"type":"${type}","payload":${payload}}`,window.parent.origin);
 }
 
 export class EventHandler {

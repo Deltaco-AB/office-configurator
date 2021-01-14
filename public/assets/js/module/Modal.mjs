@@ -269,7 +269,8 @@ export class Summary extends Modal {
 
 		for(const [id,index] of Object.entries(selected)) {
 			let data = this.products[id];
-			let value = data.add.length > 0 ? data.add[0] : id;
+			const anchor = data.add[0];
+			let value = data.add.length > 0 ? anchor : id;
 
 			let item = this.createListItem(index,id,value);
 			list.appendChild(item);
@@ -281,7 +282,7 @@ export class Summary extends Modal {
 					const value = data.add.length > 0 ? data.add[0] : pointer;
 
 					let item = this.createListItem(false,pointer,value);
-					item.setAttribute("multipack",id);
+					item.setAttribute("multipack",anchor);
 
 					list.appendChild(item);
 				});
