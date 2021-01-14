@@ -1,12 +1,12 @@
-import { FunctionExtended } from "./Extensions.mjs";
+import { range, len, removeChildren, isActive } from "./Extensions.mjs";
 import { EventHandler } from "./Events.mjs";
 import { Modal } from "./Modal.mjs"; 
 
-export { Modal, FunctionExtended };
+export { Modal };
+
+const selectedHTML = "<svg class='selected' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 168 165'><title>Remove product</title><path d='M607.62,303.22h151a7,7,0,0,1,7,7v148a7,7,0,0,1-7,7h-151a7,7,0,0,1-7-7v-148A7,7,0,0,1,607.62,303.22Z' transform='translate(-599.12 -301.72)'/><path d='M705.05,367.48h-7.66V360.4a4.71,4.71,0,0,0-4.72-4.71H673.81a4.71,4.71,0,0,0-4.72,4.71v7.08h-7.66a2.95,2.95,0,1,0,0,5.89h1.77v34.19a4.71,4.71,0,0,0,4.71,4.72h30.66a4.71,4.71,0,0,0,4.71-4.72V373.37h1.77a2.95,2.95,0,1,0,0-5.89Zm-13.56,0H675v-3.3a2.59,2.59,0,0,1,2.59-2.6H688.9a2.59,2.59,0,0,1,2.59,2.6v3.3ZM675,375.73V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Zm10.61,0V404a2.36,2.36,0,0,1-4.72,0v-28.3a2.36,2.36,0,0,1,4.72,0Zm10.61,0V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Z' transform='translate(-599.12 -301.72)'/></svg>";
 
 class Configurator {
-
-	static selectedHTML = "<svg class='selected' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 168 165'><title>Remove product</title><path d='M607.62,303.22h151a7,7,0,0,1,7,7v148a7,7,0,0,1-7,7h-151a7,7,0,0,1-7-7v-148A7,7,0,0,1,607.62,303.22Z' transform='translate(-599.12 -301.72)'/><path d='M705.05,367.48h-7.66V360.4a4.71,4.71,0,0,0-4.72-4.71H673.81a4.71,4.71,0,0,0-4.72,4.71v7.08h-7.66a2.95,2.95,0,1,0,0,5.89h1.77v34.19a4.71,4.71,0,0,0,4.71,4.72h30.66a4.71,4.71,0,0,0,4.71-4.72V373.37h1.77a2.95,2.95,0,1,0,0-5.89Zm-13.56,0H675v-3.3a2.59,2.59,0,0,1,2.59-2.6H688.9a2.59,2.59,0,0,1,2.59,2.6v3.3ZM675,375.73V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Zm10.61,0V404a2.36,2.36,0,0,1-4.72,0v-28.3a2.36,2.36,0,0,1,4.72,0Zm10.61,0V404a2.36,2.36,0,1,1-4.72,0v-28.3a2.36,2.36,0,1,1,4.72,0Z' transform='translate(-599.12 -301.72)'/></svg>";
 
 	constructor(config) {
 		this.config = config;
@@ -23,7 +23,7 @@ class Configurator {
 	}
 
 	page(index) {
-		if(!FunctionExtended.range(index,1,this.active.pages)) {
+		if(!range(index,1,this.active.pages)) {
 			throw new Error("Page index out of range");
 		}
 
@@ -54,7 +54,7 @@ class Configurator {
 			return;
 		}
 
-		if(!FunctionExtended.range(index,1,this.config.categories)) {
+		if(!range(index,1,this.config.categories)) {
 			throw new Error("Category index out of range");
 		}
 
@@ -64,11 +64,11 @@ class Configurator {
 		const gridLength = 4; // Number of items per page
 		
 		// Number of pages
-		const pages = Math.ceil(FunctionExtended.len(category.products) / gridLength);
+		const pages = Math.ceil(len(category.products) / gridLength);
 		document.getElementById("configure").style.setProperty("--page-count",pages);
 		document.getElementById("totalPages").innerText = pages;
 
-		FunctionExtended.removeChildren(wrapper);
+		removeChildren(wrapper);
 
 		// Populate pages with products
 		for(let i = 0;i < (pages * gridLength);i++) {
@@ -101,7 +101,7 @@ class Configurator {
 				thumbnail.style.setProperty("background-position-y",`calc(var(--sprite-thumbnail-height) * -${productID})`);
 				
 				item.appendChild(thumbnail);
-				item.insertAdjacentHTML("beforeend",Configurator.selectedHTML);
+				item.insertAdjacentHTML("beforeend",selectedHTML);
 				item.addEventListener("click",event => this.evt.toggleProduct(event),false);
 			}
 
@@ -160,13 +160,13 @@ export class Init extends Configurator {
 
 		// Previous page button
 		paging.firstElementChild.addEventListener("click",event => {
-			if(FunctionExtended.isActive(event.target.closest(".pageButton"))) {
+			if(isActive(event.target.closest(".pageButton"))) {
 				this.page(this.active.page - 1);
 			}
 		});
 		// Next page button
 		paging.lastElementChild.addEventListener("click",event => {
-			if(FunctionExtended.isActive(event.target.closest(".pageButton"))) {
+			if(isActive(event.target.closest(".pageButton"))) {
 				this.page(this.active.page + 1);
 			}
 		});
@@ -197,7 +197,7 @@ export class Init extends Configurator {
 	initViewfinder() {
 		const viewfinder = document.getElementById("viewfinder");
 
-		FunctionExtended.removeChildren(viewfinder);
+		removeChildren(viewfinder);
 
 		let i = 0;
 		for(const id in this.config.products) {

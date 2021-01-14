@@ -1,13 +1,37 @@
 import { message } from "./Events.mjs";
 
+const modalTransitionDuration = 300;
+
+// Create a div with classes
+function createDiv(classes) {
+	let element = document.createElement("div");
+	element.classList = classes;
+
+	return element;
+}
+
+function textElement(text) {
+	let element = document.createElement("p");
+	element.innerText = text;
+
+	return element;
+}
+
+function inputElement(data) {
+	const element = document.createElement("input");
+	element.setAttribute("data",data);
+	element.setAttribute("type","number");
+	element.setAttribute("min","0");
+	element.setAttribute("value","1");
+
+	return element;
+}
+
 export class Modal {
 
-	static transitionDuration = 300;
-	static closeIcon = "<svg onclick='this.closest(\".modal\").close()' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>";
-
 	constructor(title = false) {
-		this.wrapper = Modal.createDiv("modal center");
-		this.inner = Modal.createDiv("inner");
+		this.wrapper = createDiv("modal center");
+		this.inner = createDiv("inner");
 
 		if(title) {
 			this.appendHeader(title);
@@ -15,21 +39,6 @@ export class Modal {
 		}
 		
 		this.wrapper.close = () => this.close();
-	}
-
-	// Create a div with classes
-	static createDiv(classes) {
-		let element = document.createElement("div");
-		element.classList = classes;
-
-		return element;
-	}
-
-	static textElement(text) {
-		let element = document.createElement("p");
-		element.innerText = text;
-
-		return element;
 	}
 
 	// Add modal content from node or HTML
@@ -40,7 +49,7 @@ export class Modal {
 
 	// Helper functions for modal header
 	appendHeader(title) {
-		let header = Modal.createDiv("header center");
+		let header = createDiv("header center");
 
 		function heading() {
 			let heading = document.createElement("h1");
@@ -51,11 +60,11 @@ export class Modal {
 
 		// Close button
 		function close() {
-			let close = Modal.createDiv("close center");
+			let close = createDiv("close center");
 			close.setAttribute("onclick","this.closest('.modal').close()");
 	
-			close.appendChild(Modal.createDiv("line"));
-			close.appendChild(Modal.createDiv("line"));
+			close.appendChild(createDiv("line"));
+			close.appendChild(createDiv("line"));
 	
 			return close;
 		}
@@ -86,7 +95,7 @@ export class Modal {
 		}
 		
 		this.wrapper.classList.remove("active");
-		setTimeout(() => this.wrapper.remove(), Modal.transitionDuration);
+		setTimeout(() => this.wrapper.remove(), modalTransitionDuration);
 	}
 
 }
@@ -109,16 +118,6 @@ export class Summary extends Modal {
 		this.bind();
 
 		this.open();
-	}
-
-	static inputElement(data) {
-		const element = document.createElement("input");
-		element.setAttribute("data",data);
-		element.setAttribute("type","number");
-		element.setAttribute("min","0");
-		element.setAttribute("value","1");
-
-		return element;
 	}
 
 	/* ---- */
@@ -199,7 +198,7 @@ export class Summary extends Modal {
 			target.classList.remove("disabled");
 			target.innerText = "Add to cart";
 
-			const button = Modal.createDiv("button");
+			const button = createDiv("button");
 			button.innerText = "New configuration";
 			button.setAttribute("onclick","window._configReset()");
 			
@@ -242,29 +241,29 @@ export class Summary extends Modal {
 			return element;
 		}
 
-		let item = Modal.createDiv("item center");
+		let item = createDiv("item center");
 		item.setAttribute("data",data);
 
 		// Treat item as multipack if index is false
 		if(index === false) {
-			item.appendChild(Modal.textElement(text));
+			item.appendChild(textElement(text));
 
 			return item;
 		}
 
 		item.appendChild(spriteElement(index));
-		item.appendChild(Modal.textElement(text));
-		item.appendChild(Summary.inputElement(data));
+		item.appendChild(textElement(text));
+		item.appendChild(inputElement(data));
 
 		return item;
 	}
 
 	appendProducts(selected) {
-		const list = Modal.createDiv("list");
+		const list = createDiv("list");
 
-		const bulk = Modal.createDiv("bulk center");
-		bulk.appendChild(Modal.textElement("Buy your configuration in bulk:"));
-		bulk.appendChild(Summary.inputElement("bulk"));
+		const bulk = createDiv("bulk center");
+		bulk.appendChild(textElement("Buy your configuration in bulk:"));
+		bulk.appendChild(inputElement("bulk"));
 
 		this.append(bulk);
 
@@ -293,7 +292,7 @@ export class Summary extends Modal {
 	}
 
 	appendCheckout() {
-		const button = Modal.createDiv("button");
+		const button = createDiv("button");
 		button.setAttribute("data","addtocart");
 		button.innerText = "Add to Cart";
 
@@ -338,17 +337,17 @@ export class Categories extends Modal {
 	// ----
 
 	createListItem(icon,text,id) {
-		let item = Modal.createDiv("item center");
+		let item = createDiv("item center");
 		item.setAttribute("data",id);
 
-		item.appendChild(Modal.textElement(icon));
-		item.appendChild(Modal.textElement(text));
+		item.appendChild(textElement(icon));
+		item.appendChild(textElement(text));
 
 		return item;
 	}
 
 	appendCategories(categories) {
-		let list = Modal.createDiv("list");
+		let list = createDiv("list");
 
 		let i = 1;
 		for(let [id,data] of Object.entries(categories)) {
