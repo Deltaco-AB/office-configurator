@@ -22,6 +22,8 @@
     position: absolute;
     box-sizing: border-box;
     max-height: 90%;
+    width: calc(100% - 50px);
+    max-width: 500px;
     padding: var(--box-padding-inner);
     background: rgb(var(--color-text));
     border-radius: 20px;
@@ -149,15 +151,12 @@
 }
 
 .modal .summary {
-    --pseudo-height: 46px;
     --background-color: rgb(var(--color-text));
-    width: 500px;
     position: relative;
     box-sizing: border-box;
     padding: var(--box-padding-inner);
     background: var(--background-color);
     border-radius: var(--border-radius);
-    margin-bottom: var(--pseudo-height);
 }
 
 /* .modal .summary::after {
@@ -252,4 +251,22 @@
 .modal .button.disabled {
     pointer-events: none;
     background: rgba(var(--color),.3);
+}
+
+/* Scale 0.25x */
+@media screen and (max-width: 581px) {
+
+    .modal input[type="number"] {
+        flex: 1 1 auto;
+    }
+
+    .modal .summary .list {
+        padding: 5px 25px 5px 25px;
+    }
+
+    .modal .summary .item {
+        flex-wrap: wrap;
+        height: calc(var(--sprite-thumbnail-height) * 1.8);
+    }
+
 }

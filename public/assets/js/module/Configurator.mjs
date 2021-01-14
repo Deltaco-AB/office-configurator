@@ -144,8 +144,6 @@ export class Init extends Configurator {
 			throw new Error("Config not supported by origin");
 		}
 
-		//document.getElementById("configName").innerText = this.config.defaultName;
-
 		this.initProducts();
 		this.initPagination();
 		this.initCategories();

@@ -27,6 +27,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Positioning */
@@ -527,6 +529,20 @@ main > div > * {
         display: none;
     }
 
+    .actions {
+        flex-wrap: wrap;
+    }
+
+    .actions .action,
+    .actions .button {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .actions .button {
+        margin-top: 20px;
+    }
+
     #viewfinder .item {
         background: url("../img/sheets/confg-0.3x.png");
     }
@@ -534,7 +550,7 @@ main > div > * {
     #configure {
         top: 0;
         width: 100%;
-        height: 175vw;
+        height: 166vw;
     }
 
     #summary .actions {
@@ -543,6 +559,14 @@ main > div > * {
 
     #select .grid {
         --size: 80vw;
+    }
+
+    #select .item > .selected {
+        transform: scale(.9);
+    }
+
+    #select .item.selected > .selected {
+        transform: scale(1);
     }
 
 }
