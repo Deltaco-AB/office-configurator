@@ -29,6 +29,7 @@ Append the EventListener snippet as close to your closing `</body>` tag as possi
   },false);
 </script>
 ```
+
 3. Replace `// ...` with code to handle the shopping cart flow on your webshop. See [`event.data.type = "cart"`](#) for message content semantics.
 
 ## Filtered configurator
