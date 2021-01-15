@@ -50,12 +50,3 @@ for i in range(sizes):
 
 	thumb.put(f"{folder[2]}thumb-0.{screen}x.png",(thumbSheetScaled,thumbSheetScaled))
 	print(f"Scaled sheet: thumb-0.{screen}x.png: {str(thumbSheetScaled)}")
-
-from pysheeter import PySheeter # https://github.com/VictorWesterlund/pysheeter/
-
-# Create spritesheets from folders
-configurator = PySheeter.Sheet("configurator")
-thumb = PySheeter.Sheet("thumbs")
-
-configurator.put("../public/assets/img/sprites_872.png",(872,581))
-thumb.put("../public/assets/img/sprites_128.png",(128,128))
