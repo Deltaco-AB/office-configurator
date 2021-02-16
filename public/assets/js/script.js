@@ -24,7 +24,7 @@ if(!coercive(searchParams.get("awaitConfig"))) {
 }
 
 window.addEventListener("message",event => {
-	if(event.origin !== top.location.origin || event.data.type !== "config") {
+	if(event.data.type !== "config") {
 		return;
 	}
 	
