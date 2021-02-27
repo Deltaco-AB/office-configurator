@@ -4,6 +4,7 @@ import { Init as Configurator, Modal } from "./module/Configurator.mjs";
 
 const searchParams = new URLSearchParams(window.location.search);
 const loadingScreen = new Modal();
+loadingScreen.inner.style.setProperty("width","unset");
 loadingScreen.open("<img src='assets/img/loading.gif'/>");
 
 // Prompt user to log in before initializing the configurator
