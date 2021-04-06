@@ -3,6 +3,23 @@ import { message } from "./module/Events.mjs";
 import { Init as Configurator, Modal } from "./module/Configurator.mjs";
 
 const searchParams = new URLSearchParams(window.location.search);
+const awaitConfig = coercive(searchParams.get("awaitConfig"));
+
+let ping = {
+	ready: {
+		interval: null,
+		timeout: null,
+		failed: () => {
+			// No config was received in sufficient time
+			clearInterval(ping.ready.interval);
+			loadingScreen.close();
+
+			const error = new Modal();
+			error.open("<h2>Failed to load configuration</h2><p>Request timed out</p>");
+		}
+	}
+}
+
 const loadingScreen = new Modal();
 loadingScreen.inner.style.setProperty("width","unset");
 loadingScreen.open("<img src='assets/img/loading.gif'/>");
@@ -15,7 +32,7 @@ if(searchParams.has("loggedIn")) {
 }
 
 // Initialize with default config if awaitConfig is false
-if(!coercive(searchParams.get("awaitConfig"))) {
+if(!awaitConfig) {
 	fetch("config.json").then(response => response.text()).then(config => {
 		window.postMessage({
 			type: "config",
@@ -33,6 +50,12 @@ window.addEventListener("message",event => {
 	window.guide = new Configurator(JSON.parse(event.data.payload));
 
 	loadingScreen.close();
+	clearInterval(ping.ready.interval);
+	clearTimeout(ping.ready.timeout);
 });
 
-message("ready");
+// Ping parent window until a config is received
+if(awaitConfig) {
+	ping.ready.interval = setInterval(() => message("ready"),2000); // Ping every 2 seconds
+	ping.ready.timeout = setTimeout(ping.ready.failed,5000); // Give up after 5 seconds
+}
