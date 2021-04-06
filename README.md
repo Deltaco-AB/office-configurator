@@ -21,6 +21,7 @@ Append the EventListener snippet as close to your closing `</body>` tag as possi
 ```html
 <script>
   window.addEventListener("message", (event) => {
+    const data = JSON.load(event.data);
     if(event.origin !== "https://app.cloud.deltaco.eu" || event.data.type != "cart") {
       return;
     }
@@ -62,6 +63,7 @@ _Example:_
 The configurator dispatches a [`MessageEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent) with [`event.data.type = "ready"`](#) when it's ready to accept a config.
 ```js
 window.addEventListener("message", (event) => {
+  const data = JSON.load(event.data);
   if(event.origin !== "https://app.cloud.deltaco.eu" || event.data.type != "ready") {
     return;
   }
@@ -71,7 +73,7 @@ window.addEventListener("message", (event) => {
   frame.postMessage({
     type: "config",
     payload: config // Your config.json
-  },frame.origin);
+  },"*");
 },false);
 ```
 
@@ -85,6 +87,7 @@ Sample script that submits a custom `config.json` (represented as "officeConfigu
 
 ```js
 window.addEventListener("message",event => {
+  const data = JSON.load(event.data);
   switch(event.data.type) {
       // Fetch custom config.json and send it to configurator
       case "ready":
@@ -94,7 +97,7 @@ window.addEventListener("message",event => {
               frame.postMessage({
                   type: "config",
                   payload: config
-              },frame.origin);
+              },"*");
           });
           break;
 
@@ -233,11 +236,11 @@ To ensure backwards compatability, the base path will remain on version 1.3 unti
 
 |URL path|Version|
 |--|--|
-|`/office-configurator/`|1.3|
-|`/office-configurator/v1/`|1.3|
-|`/office-configurator/v1.3/`|1.3|
-|`/office-configurator/v2/`|2.0|
-|`/office-configurator/v2.0/`|2.0|
+|[`/office-configurator/`](https://app.cloud.deltaco.eu/office-configurator/)|1.3|
+|[`/office-configurator/v1/`](https://app.cloud.deltaco.eu/office-configurator/v1/)|1.3|
+|[`/office-configurator/v1.3/`](https://app.cloud.deltaco.eu/office-configurator/v1.3/)|1.3|
+|[`/office-configurator/v2/`](https://app.cloud.deltaco.eu/office-configurator/v2/)|2.0|
+|[`/office-configurator/v2.0/`](https://app.cloud.deltaco.eu/office-configurator/v2.0/)|2.0|
 
 # License
 
