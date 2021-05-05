@@ -156,7 +156,7 @@
     box-sizing: border-box;
     padding: var(--box-padding-inner);
     background: var(--background-color);
-    border-radius: var(--border-radius);
+    border-radius: 20px;
 }
 
 /* .modal .summary::after {
@@ -194,10 +194,7 @@
 	justify-content: flex-start;
 	padding-top: calc(var(--box-padding-inner) / 2);
     padding-bottom: calc(var(--box-padding-inner) / 2);
-}
-
-.modal .item + .item {
-    border-top: solid 2px rgba(var(--color),.05);
+    border-radius: 6px;
 }
 
 .modal .item.remove > p,
