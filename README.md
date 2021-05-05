@@ -14,7 +14,7 @@ Default configuraton. The whole DELTACO OFFICE product lineup available in this 
 
 1. Embed the configurator on your webshop within an `<iframe>`.
 ```html
- <iframe id="officeConfigurator" style="width:1200px;height:800px" src="https://app.cloud.deltaco.eu/office-configurator/v2/"></iframe>
+ <iframe id="officeConfigurator" style="width:1200px;height:800px" src="https://office-configurator.github.deltaco.eu/public"></iframe>
 ```
 2. A [`MessageEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent) is dispatched to `window.parent` when the user submits their configuraton.
 Append the EventListener snippet as close to your closing `</body>` tag as possible.
@@ -22,7 +22,7 @@ Append the EventListener snippet as close to your closing `</body>` tag as possi
 <script>
   window.addEventListener("message", (event) => {
     const data = JSON.load(event.data);
-    if(event.origin !== "https://app.cloud.deltaco.eu" || event.data.type != "cart") {
+    if(event.origin !== "https://office-configurator.github.deltaco.eu" || event.data.type != "cart") {
       return;
     }
 
@@ -41,11 +41,11 @@ Hide products not available on your webshop.
 1. Follow all steps from the [basic implementation](#basic-configurator)
 2. Append the `awaitConfig=true` search parameter to the configurator URL
 ```html
- <iframe id="officeConfigurator" style="width:1200px;height:800px" src="https://app.cloud.deltaco.eu/office-configurator/v2/?awaitConfig=true"></iframe>
+ <iframe id="officeConfigurator" style="width:1200px;height:800px" src="https://office-configurator.github.deltaco.eu/public?awaitConfig=true"></iframe>
 ```
 _The configurator won't initialize until you provide it with a custom config._
 
-3. Download a copy of the default `config.json` from [GitHub](https://github.com/Deltaco-AB/office-configurator/blob/develop/2.0.0/public/config.json) or [DELTACO Cloud](https://app.cloud.deltaco.eu/office-configurator/v2/config.json)
+3. [Download a copy of the default configuration](https://github.com/Deltaco-AB/office-configurator/blob/master/public/config.json)
 4. Locate a product you wish to hide, and replace its `category` value with `0` to make it inactive.
 
 _Example:_
@@ -64,7 +64,7 @@ The configurator dispatches a [`MessageEvent`](https://developer.mozilla.org/en-
 ```js
 window.addEventListener("message", (event) => {
   const data = JSON.load(event.data);
-  if(event.origin !== "https://app.cloud.deltaco.eu" || event.data.type != "ready") {
+  if(event.origin !== "https://office-configurator.github.deltaco.eu" || event.data.type != "ready") {
     return;
   }
   
@@ -121,7 +121,7 @@ Make the configurator display a message if the user isn't logged in on your webs
 
 1. Append the `loggedIn=true` search parameter to the configurator URL
 ```html
- <iframe id="officeConfigurator" style="width:1200px;height:800px" src="https://app.cloud.deltaco.eu/office-configurator/v2/?loggedIn=true"></iframe>
+ <iframe id="officeConfigurator" style="width:1200px;height:800px" src="https://office-configurator.github.deltaco.eu/public?loggedIn=true"></iframe>
 ```
 2. Flip the value when the login state changes to toggle the message.
 
@@ -226,7 +226,7 @@ It's possible to upgrade from version 1.3 to 2.0 without making any major change
 
 If you didn't modify the `if` statement when implementing 1.3 from the [1.3 README](https://github.com/Deltaco-AB/office-configurator/blob/1c95d8a241271d209acbf3514c1a2018d7369f17/README.md); you already have this check in place.
 ```js
-if(event.origin !== "https://app.cloud.deltaco.eu" || event.data.type != "cart") {
+if(event.origin !== "https://office-configurator.github.deltaco.eu" || event.data.type != "cart") {
  return;
 }
 ```
